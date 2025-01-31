@@ -45,6 +45,12 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  title: 'InterLaw - Global Tax Optimization',
+  description: 'Strategic residency planning and tax optimization for global citizens.',
+  icons: {
+    icon: '/favicon.png',
+    apple: '/apple-touch-icon.png',
+  },
 }
 
 export default function RootLayout({
@@ -54,8 +60,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <SEO />
-      <body className={inter.className}>
+      <head>
+        <link rel="icon" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+      </head>
+      <body className={`bg-black text-white ${inter.className}`}>
+        <SEO />
         <Navbar />
         <main>{children}</main>
         <Footer />

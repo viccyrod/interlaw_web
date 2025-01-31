@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "generate:og": "ts-node-script scripts/generateOgImages.ts",
-    "generate:logo": "ts-node-script scripts/generateLogo.ts",
-    "generate:assets": "npm run generate:og && npm run generate:logo"
+    "generate:favicon": "ts-node-script scripts/generateFavicon.ts",
+    "generate:assets": "npm run generate:og && npm run generate:favicon"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.1",
