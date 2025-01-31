@@ -1,47 +1,65 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
-import { Navbar } from "@/components/sections/Navbar";
+import { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import { SEO } from '@/components/SEO'
+import { Navbar } from '@/components/sections/Navbar'
+import { Footer } from '@/components/sections/Footer'
+import './globals.css'
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Interlaw.io - Global IP Protection',
-  description: 'Protect your intellectual property worldwide with our streamlined approach to trademarks, patents, and IP assets.',
-  keywords: ['IP Law', 'Trademark Protection', 'Patent Filing', 'Global IP Services'],
+  metadataBase: new URL('https://interlaw.io'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
-    title: 'Interlaw.io - Global IP Protection',
-    description: 'Protect your intellectual property worldwide with our streamlined approach.',
-    images: ['/og-image.jpg'], // Add an OG image if you have one
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://interlaw.io',
+    siteName: 'InterLaw',
+    images: [
+      {
+        url: 'https://interlaw.io/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'InterLaw - Global Tax Optimization Experts',
+      },
+    ],
   },
-  icons: {
-    icon: '/interlaw_favicon.svg',
-    apple: '/interlaw_favicon.svg',
+  twitter: {
+    card: 'summary_large_image',
+    site: '@interlaw',
+    creator: '@interlaw',
   },
-};
+  verification: {
+    google: 'your-google-verification-code',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
-      >
+      <SEO />
+      <body className={inter.className}>
         <Navbar />
-        {children}
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
-  );
+  )
 }

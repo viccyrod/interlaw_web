@@ -1,0 +1,15 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Disallow admin, private, and api routes
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Disallow: /styleguide
+
+# Sitemap location
+Sitemap: https://interlaw.io/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 10 
