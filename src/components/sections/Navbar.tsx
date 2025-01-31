@@ -60,16 +60,22 @@ export function Navbar() {
                 </Link>
               </nav>
 
-              <Button 
-                variant="default" 
-                size="sm"
-                className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold shadow-lg shadow-amber-500/20 transition-all duration-300 hover:shadow-amber-500/30 hover:-translate-y-0.5 flex items-center gap-2"
-                aria-label="Schedule a free consultation"
+              <Link 
+                href="https://calendly.com/interlaw-io/30min"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <Phone className="w-4 h-4" />
-                Free Consultation
-                <ChevronRight className="w-4 h-4" />
-              </Button>
+                <Button 
+                  variant="default" 
+                  size="sm"
+                  className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold shadow-lg shadow-amber-500/20 transition-all duration-300 hover:shadow-amber-500/30 hover:-translate-y-0.5 flex items-center gap-2"
+                  aria-label="Schedule a free consultation"
+                >
+                  <Phone className="w-4 h-4" />
+                  Free Consultation
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -117,16 +123,22 @@ export function Navbar() {
                 Insights
               </Link>
               <div className="px-4 pt-2">
-                <Button 
-                  variant="default" 
-                  size="sm"
-                  className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black flex items-center justify-center gap-2"
+                <Link 
+                  href="https://calendly.com/interlaw-io/30min"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <Phone className="w-4 h-4" />
-                  Free Consultation
-                  <ChevronRight className="w-4 h-4" />
-                </Button>
+                  <Button 
+                    variant="default" 
+                    size="sm"
+                    className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black flex items-center justify-center gap-2"
+                  >
+                    <Phone className="w-4 h-4" />
+                    Free Consultation
+                    <ChevronRight className="w-4 h-4" />
+                  </Button>
+                </Link>
               </div>
             </nav>
           </motion.div>

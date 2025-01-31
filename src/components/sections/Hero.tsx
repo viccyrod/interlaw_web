@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export function Hero() {
   return (
@@ -86,13 +87,17 @@ export function Hero() {
             transition={{ delay: 0.4 }}
             className="flex flex-col sm:flex-row justify-center gap-4"
           >
-            <Button className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold px-8 py-6 rounded-full">
-              Calculate Your Tax Savings
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button variant="outline" className="border-amber-500/20 hover:bg-amber-500/10 px-8 py-6 rounded-full">
-              Book Free Consultation
-            </Button>
+            <Link href="/calculator">
+              <Button className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold px-8 py-6 rounded-full">
+                Calculate Your Tax Savings
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+            <Link href="https://calendly.com/interlaw-io/30min" target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" className="border-amber-500/20 hover:bg-amber-500/10 px-8 py-6 rounded-full">
+                Book Free Consultation
+              </Button>
+            </Link>
           </motion.div>
 
           {/* Social proof */}
