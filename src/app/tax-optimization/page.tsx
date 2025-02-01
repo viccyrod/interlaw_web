@@ -11,7 +11,8 @@ const StrategyCard = ({
   timeline, 
   stayRequirement,
   description,
-  isRecommended
+  isRecommended,
+  href
 }: {
   country: string
   benefits: string[]
@@ -19,6 +20,7 @@ const StrategyCard = ({
   stayRequirement: string
   description: string
   isRecommended?: boolean
+  href: string
 }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
@@ -72,20 +74,20 @@ const StrategyCard = ({
 
     {isRecommended ? (
       <div className="mt-6 flex flex-col sm:flex-row gap-3">
-        <Link href="/calculator" className="flex-1">
+        <Link href={href} className="flex-1">
           <Button className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black">
-            Calculate Savings
+            Learn More
             <ArrowRight className="ml-2 w-4 h-4" />
           </Button>
         </Link>
-        <Link href="https://calendly.com/interlaw-io/30min" target="_blank" rel="noopener noreferrer" className="flex-1">
+        <Link href="/calculator" className="flex-1">
           <Button variant="outline" className="w-full border-amber-500/20 hover:bg-amber-500/10">
-            Learn More
+            Calculate Savings
           </Button>
         </Link>
       </div>
     ) : (
-      <Link href="https://calendly.com/interlaw-io/30min" target="_blank" rel="noopener noreferrer" className="mt-6 block">
+      <Link href={href} className="mt-6 block">
         <Button variant="outline" className="w-full border-amber-500/20 hover:bg-amber-500/10">
           Learn More
         </Button>
@@ -118,7 +120,7 @@ export default function TaxOptimization() {
           <motion.div className="lg:col-span-2">
             <StrategyCard
               country="Paraguay"
-              description="The fastest and most efficient tax optimization strategy available. Perfect for digital entrepreneurs and investors seeking rapid implementation with minimal presence requirements and the lowest setup costs."
+              description="The fastest and most efficient tax optimization strategy available. Perfect for digital entrepreneurs seeking rapid implementation with minimal presence requirements and the lowest setup costs."
               benefits={[
                 "Foreign income exemption",
                 "Fastest processing (30-45 days)",
@@ -128,12 +130,13 @@ export default function TaxOptimization() {
               timeline="30-45 day process"
               stayRequirement="Minimal presence required"
               isRecommended={true}
+              href="/jurisdictions/paraguay"
             />
           </motion.div>
 
           <StrategyCard
             country="Cyprus"
-            description="An attractive EU destination offering a flexible non-domiciled tax regime with minimal stay requirements and strong business infrastructure. Perfect for international entrepreneurs and investors seeking EU presence."
+            description="An attractive EU destination offering a flexible non-domiciled tax regime with minimal stay requirements and strong business infrastructure."
             benefits={[
               "Non-domiciled tax benefits",
               "No inheritance tax",
@@ -142,6 +145,7 @@ export default function TaxOptimization() {
             ]}
             timeline="2-3 month process"
             stayRequirement="60 days annually"
+            href="https://calendly.com/interlaw-io/30min"
           />
 
           <StrategyCard
@@ -155,6 +159,7 @@ export default function TaxOptimization() {
             ]}
             timeline="2-3 month process"
             stayRequirement="183 days or 90 days with business"
+            href="https://calendly.com/interlaw-io/30min"
           />
 
           <StrategyCard
@@ -168,6 +173,7 @@ export default function TaxOptimization() {
             ]}
             timeline="4-6 month process"
             stayRequirement="183 days annually"
+            href="https://calendly.com/interlaw-io/30min"
           />
 
           <StrategyCard
@@ -181,6 +187,7 @@ export default function TaxOptimization() {
             ]}
             timeline="3-4 month process"
             stayRequirement="Flexible presence rules"
+            href="https://calendly.com/interlaw-io/30min"
           />
         </div>
 
