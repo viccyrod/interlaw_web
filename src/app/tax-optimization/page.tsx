@@ -21,80 +21,88 @@ const StrategyCard = ({
   description: string
   isRecommended?: boolean
   href: string
-}) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
-    className={`relative bg-gradient-to-br ${isRecommended ? 'from-amber-950/30 to-amber-900/20' : 'from-black to-amber-950/20'} rounded-2xl p-6 sm:p-8 border ${isRecommended ? 'border-amber-500/30' : 'border-amber-500/10'} hover:border-amber-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/5 h-full flex flex-col`}
-  >
-    <div className="flex items-start justify-between gap-3 mb-4">
-      <div className="flex items-center gap-3">
-        <Globe2 className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400 flex-shrink-0" />
-        <h3 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-amber-200 to-yellow-200 bg-clip-text text-transparent">
-          {country}
-        </h3>
-      </div>
-      {isRecommended && (
-        <span className="px-2 py-1 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-400 text-xs font-semibold whitespace-nowrap">
-          Recommended
-        </span>
-      )}
-    </div>
-    
-    <p className="text-gray-400 mb-6 text-sm leading-relaxed">
-      {description}
-    </p>
+}) => {
+  const isExternal = href.startsWith('http')
 
-    <div className="flex-grow space-y-6">
-      <div>
-        <h4 className="text-base sm:text-lg font-semibold text-amber-400 mb-3">Key Benefits</h4>
-        <ul className="space-y-2">
-          {benefits.map((benefit, index) => (
-            <li key={index} className="flex items-start gap-2 text-sm text-gray-300">
-              <CheckCircle2 className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-              <span>{benefit}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 text-sm text-gray-300">
-        <div className="flex items-center gap-2">
-          <Clock className="w-4 h-4 text-amber-400 flex-shrink-0" />
-          <span>{timeline}</span>
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className={`relative bg-gradient-to-br ${isRecommended ? 'from-amber-950/30 to-amber-900/20' : 'from-black to-amber-950/20'} rounded-2xl p-6 sm:p-8 border ${isRecommended ? 'border-amber-500/30' : 'border-amber-500/10'} hover:border-amber-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/5 h-full flex flex-col`}
+    >
+      <div className="flex items-start justify-between gap-3 mb-4">
+        <div className="flex items-center gap-3">
+          <Globe2 className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400 flex-shrink-0" />
+          <h3 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-amber-200 to-yellow-200 bg-clip-text text-transparent">
+            {country}
+          </h3>
         </div>
-        <div className="flex items-center gap-2">
-          <Calendar className="w-4 h-4 text-amber-400 flex-shrink-0" />
-          <span>{stayRequirement}</span>
+        {isRecommended && (
+          <span className="px-2 py-1 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-400 text-xs font-semibold whitespace-nowrap">
+            Recommended
+          </span>
+        )}
+      </div>
+      
+      <p className="text-gray-400 mb-6 text-sm leading-relaxed">
+        {description}
+      </p>
+
+      <div className="flex-grow space-y-6">
+        <div>
+          <h4 className="text-base sm:text-lg font-semibold text-amber-400 mb-3">Key Benefits</h4>
+          <ul className="space-y-2">
+            {benefits.map((benefit, index) => (
+              <li key={index} className="flex items-start gap-2 text-sm text-gray-300">
+                <CheckCircle2 className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                <span>{benefit}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 text-sm text-gray-300">
+          <div className="flex items-center gap-2">
+            <Clock className="w-4 h-4 text-amber-400 flex-shrink-0" />
+            <span>{timeline}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Calendar className="w-4 h-4 text-amber-400 flex-shrink-0" />
+            <span>{stayRequirement}</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    {isRecommended ? (
-      <div className="mt-6 flex flex-col sm:flex-row gap-3">
-        <Link href={href} className="flex-1">
-          <Button className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black">
-            Learn More
-            <ArrowRight className="ml-2 w-4 h-4" />
-          </Button>
-        </Link>
-        <Link href="/calculator" className="flex-1">
+      {isRecommended ? (
+        <div className="mt-6 flex flex-col sm:flex-row gap-3">
+          <Link href={href} className="flex-1">
+            <Button className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black">
+              Learn More
+              <ArrowRight className="ml-2 w-4 h-4" />
+            </Button>
+          </Link>
+          <Link href="/calculator" className="flex-1">
+            <Button variant="outline" className="w-full border-amber-500/20 hover:bg-amber-500/10">
+              Calculate Savings
+            </Button>
+          </Link>
+        </div>
+      ) : (
+        <Link 
+          href={href} 
+          className="mt-6 block"
+          {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        >
           <Button variant="outline" className="w-full border-amber-500/20 hover:bg-amber-500/10">
-            Calculate Savings
+            Learn More
           </Button>
         </Link>
-      </div>
-    ) : (
-      <Link href={href} className="mt-6 block">
-        <Button variant="outline" className="w-full border-amber-500/20 hover:bg-amber-500/10">
-          Learn More
-        </Button>
-      </Link>
-    )}
-  </motion.div>
-)
+      )}
+    </motion.div>
+  )
+}
 
 export default function TaxOptimization() {
   return (

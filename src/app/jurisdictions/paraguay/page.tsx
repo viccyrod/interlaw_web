@@ -2,8 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Clock, Calendar, CheckCircle2, Globe2, Building2, Briefcase } from 'lucide-react'
-import Image from 'next/image'
+import { ArrowRight, Clock, Calendar, CheckCircle2, Wallet } from 'lucide-react'
 import Link from 'next/link'
 
 export default function ParaguayPage() {
@@ -81,7 +80,7 @@ export default function ParaguayPage() {
             transition={{ delay: 0.5 }}
             className="bg-gradient-to-br from-amber-950/30 to-amber-900/20 rounded-xl p-6 border border-amber-500/10"
           >
-            <Building2 className="w-10 h-10 text-amber-400 mb-4" />
+            <Wallet className="w-10 h-10 text-amber-400 mb-4" />
             <h3 className="text-xl font-semibold text-amber-200 mb-2">Tax Benefits</h3>
             <p className="text-gray-400">0% tax on foreign-source income and no wealth tax, creating an optimal tax environment.</p>
           </motion.div>
@@ -104,7 +103,7 @@ export default function ParaguayPage() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-amber-200 mb-2">Initial Consultation</h3>
-                <p className="text-gray-400">We'll assess your situation and confirm if Paraguay is the optimal choice for your tax optimization strategy.</p>
+                <p className="text-gray-400">We&apos;ll assess your situation and confirm if Paraguay is the optimal choice for your tax optimization strategy.</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
