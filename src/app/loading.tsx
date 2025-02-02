@@ -12,7 +12,7 @@ export default function Loading() {
         transition={{ duration: 2, repeat: Infinity }}
       >
         <Image
-          src="/interlaw_logo.svg"
+          src="/logo.svg"
           alt="Interlaw Logo"
           width={150}
           height={50}

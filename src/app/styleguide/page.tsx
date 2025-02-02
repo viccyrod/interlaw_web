@@ -1,7 +1,8 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Check, Shield, Globe2, TrendingUp } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import { Check, Shield, Globe2, TrendingUp } from 'lucide-react'
 
 export default function StyleGuide() {
   return (

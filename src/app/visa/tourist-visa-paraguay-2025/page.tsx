@@ -160,7 +160,7 @@ export default function ParaguayTouristVisa() {
             <div className="bg-amber-950/30 p-4 sm:p-6 rounded-xl my-6 sm:my-8 border border-amber-500/20">
               <h3 className="text-lg sm:text-xl font-semibold text-amber-200 mb-3 sm:mb-4">Planning a Longer Stay?</h3>
               <p className="mb-4">
-                If you're considering a longer stay in Paraguay, explore our guides about:
+                If you&apos;re considering a longer stay in Paraguay, explore our guides about:
               </p>
               <ul className="space-y-2 mb-0">
                 <li>

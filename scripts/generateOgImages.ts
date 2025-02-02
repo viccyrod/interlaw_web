@@ -1,6 +1,6 @@
-const fs = require('fs')
-const path = require('path')
-const { createCanvas, loadImage, registerFont } = require('canvas')
+import fs from 'fs'
+import path from 'path'
+import { createCanvas, loadImage, registerFont } from 'canvas'
 
 // Create images directory if it doesn't exist
 const imagesDir = path.join(__dirname, '../public/images')
@@ -113,8 +113,7 @@ async function generateOgImage(
 
   // Save the image
   const buffer = canvas.toBuffer('image/png')
-  fs.writeFileSync(path.join(__dirname, '..', outputPath), buffer)
-  console.log(`Generated OG image: ${outputPath}`)
+  fs.writeFileSync(outputPath, buffer)
 }
 
 // Generate default OG image

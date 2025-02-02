@@ -64,7 +64,6 @@ async function generateSitemap(): Promise<void> {
   `
 
   fs.writeFileSync('public/sitemap.xml', sitemap)
-  console.log('Sitemap generated!')
 }
 
 export default generateSitemap 

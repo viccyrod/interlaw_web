@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Clock, CheckCircle2, AlertCircle, Building, DollarSign, FileText, Users } from 'lucide-react'
+import { ArrowRight, Clock, CheckCircle2, Building, DollarSign, Users } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -179,7 +179,7 @@ export default function InvestmentResidencyParaguay() {
             <div className="bg-amber-950/30 p-4 sm:p-6 rounded-xl my-6 sm:my-8 border border-amber-500/20">
               <h3 className="text-lg sm:text-xl font-semibold text-amber-200 mb-3 sm:mb-4">Related Resources</h3>
               <p className="mb-4">
-                Learn more about residency options in Paraguay:
+                If you&apos;re considering investing in Paraguay, explore our guides about:
               </p>
               <ul className="space-y-2 mb-0">
                 <li>

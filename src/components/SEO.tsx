@@ -37,7 +37,7 @@ export function SEO({
     "name": "InterLaw",
     "description": "Global tax optimization experts helping individuals and businesses maximize their wealth through strategic residency planning.",
     "url": baseUrl,
-    "logo": `${baseUrl}/interlaw_logo.svg`,
+    "logo": `${baseUrl}/logo.svg`,
     "image": ogImage,
     "priceRange": "$$$$",
     "sameAs": [
@@ -146,7 +146,7 @@ export function SEO({
       "name": "InterLaw",
       "logo": {
         "@type": "ImageObject",
-        "url": `${baseUrl}/interlaw_logo.svg`
+        "url": `${baseUrl}/logo.svg`
       }
     },
     "datePublished": article.publishedTime,

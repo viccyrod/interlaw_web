@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Clock, CheckCircle2, AlertCircle, Building, DollarSign, FileText, Globe2 } from 'lucide-react'
+import { ArrowRight, Clock, CheckCircle2, Building, FileText, Globe2 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -37,7 +37,7 @@ export default function ResidencyRequirementsParaguay() {
               transition={{ delay: 0.1 }}
               className="text-base sm:text-lg md:text-xl text-gray-400 mb-6 sm:mb-8 max-w-3xl leading-relaxed"
             >
-              Complete overview of Paraguay's residency requirements, including documentation, financial obligations, and processing timelines for 2025.
+              Complete overview of Paraguay&apos;s residency requirements, including documentation, financial obligations, and processing timelines for 2025.
             </motion.p>
           </div>
         </div>

@@ -81,7 +81,7 @@ export async function generateOgImage({
   ctx.fillText(subtitle, width / 2, startY + totalHeight + 60)
 
   // Draw logo
-  const logo = await loadImage('./public/interlaw_logo.svg')
+  const logo = await loadImage('./public/logo.svg')
   const logoWidth = 200
   const logoHeight = (logoWidth * logo.height) / logo.width
   ctx.drawImage(logo, 50, height - logoHeight - 50, logoWidth, logoHeight)
