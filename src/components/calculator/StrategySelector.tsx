@@ -1,71 +1,96 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { CheckCircle2, Clock, Calendar } from 'lucide-react'
-import { strategies } from '@/data/strategies'
-// import { TaxStrategy } from '@/types/calculator'
+import { HomeCountry } from '@/types/calculator'
+import { TAX_STRATEGIES } from '@/data/strategies'
 
 interface StrategySelectorProps {
   selectedStrategy: string
   onChange: (strategy: string) => void
+  income: number
+  currentCountry: HomeCountry | null
 }
 
-export default function StrategySelector({ selectedStrategy, onChange }: StrategySelectorProps) {
+export default function StrategySelector({ selectedStrategy, onChange, income }: StrategySelectorProps) {
+  // Filter strategies based on income
+  const suitableStrategies = TAX_STRATEGIES.filter(strategy => {
+    const { suitableForIncomeRange } = strategy
+    if (!suitableForIncomeRange) return true
+    const { min, max } = suitableForIncomeRange
+    if (min && income < min) return false
+    if (max && income > max) return false
+    return true
+  })
+
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-medium text-gray-300">
-        Select Tax Strategy
+    <div className="space-y-6">
+      <h3 className="text-lg font-semibold text-white">
+        Available Tax Optimization Strategies
       </h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {strategies.map((strategy) => (
-          <motion.div
+      
+      <div className="grid gap-4">
+        {suitableStrategies.map((strategy) => (
+          <div
             key={strategy.id}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => onChange(strategy.id)}
-            className={`cursor-pointer p-4 rounded-xl border transition-all ${
+            className={`p-4 rounded-xl border transition-all cursor-pointer ${
               selectedStrategy === strategy.id
-                ? 'bg-amber-500/10 border-amber-500'
-                : 'bg-black/50 border-amber-500/10 hover:border-amber-500/30'
+                ? 'border-amber-500 bg-amber-500/10'
+                : 'border-amber-500/10 bg-black/30 hover:border-amber-500/30'
             }`}
+            onClick={() => onChange(strategy.id)}
           >
-            <div className="flex justify-between items-start mb-3">
-              <h4 className="text-lg font-semibold text-white">
-                {strategy.name}
-              </h4>
-              {strategy.recommended && (
-                <span className="px-2 py-1 bg-amber-500/10 text-amber-400 text-xs font-semibold rounded-full">
-                  Recommended
-                </span>
-              )}
-            </div>
-            
-            <p className="text-sm text-gray-400 mb-4">
-              {strategy.description}
-            </p>
-
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm text-gray-300">
-                <Clock className="w-4 h-4 text-amber-400" />
-                Process: {strategy.processingTime}
-              </div>
-              <div className="flex items-center gap-2 text-sm text-gray-300">
-                <Calendar className="w-4 h-4 text-amber-400" />
-                Stay: {strategy.stayRequirement}
+            <div className="flex items-start justify-between">
+              <div>
+                <h4 className="font-medium text-white flex items-center gap-2">
+                  {strategy.name}
+                  {strategy.featured && (
+                    <span className="px-2 py-0.5 text-xs bg-amber-500 text-black rounded-full">
+                      Recommended
+                    </span>
+                  )}
+                </h4>
+                <p className="text-sm text-gray-400 mt-1">{strategy.description}</p>
               </div>
             </div>
 
-            <div className="mt-4 pt-4 border-t border-amber-500/10">
-              <div className="grid grid-cols-2 gap-2">
-                {strategy.benefits.slice(0, 2).map((benefit, index) => (
-                  <div key={index} className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-xs text-gray-400">{benefit}</span>
-                  </div>
+            <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <p className="text-gray-400">Setup Cost</p>
+                <p className="text-white">${strategy.setupCost.toLocaleString()}</p>
+              </div>
+              <div>
+                <p className="text-gray-400">Processing Time</p>
+                <p className="text-white">{strategy.processingTime}</p>
+              </div>
+              <div>
+                <p className="text-gray-400">Stay Requirement</p>
+                <p className="text-white">{strategy.stayRequirement}</p>
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <p className="text-sm font-medium text-white mb-2">Benefits:</p>
+              <ul className="text-sm text-gray-400 space-y-1">
+                {strategy.benefits.map((benefit, index) => (
+                  <li key={index} className="flex items-start gap-2">
+                    <span className="text-amber-500">•</span>
+                    {benefit}
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
-          </motion.div>
+
+            <div className="mt-4">
+              <p className="text-sm font-medium text-white mb-2">Requirements:</p>
+              <ul className="text-sm text-gray-400 space-y-1">
+                {strategy.requirements.map((requirement, index) => (
+                  <li key={index} className="flex items-start gap-2">
+                    <span className="text-amber-500">•</span>
+                    {requirement}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         ))}
       </div>
     </div>

@@ -1,21 +1,60 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { calculateTax, formatCurrency, formatPercentage } from '@/utils/taxCalculations'
-import { strategies } from '@/data/strategies'
-import { TaxStrategy } from '@/types/calculator'
+import { formatCurrency } from '@/utils/taxCalculations'
+import { HomeCountry, TaxBracket } from '@/types/calculator'
+import { TAX_STRATEGIES } from '@/data/strategies'
 
 interface TaxBreakdownProps {
   income: number
   strategy: string
+  currentCountry: HomeCountry | null
 }
 
-export default function TaxBreakdown({ income, strategy }: TaxBreakdownProps) {
-  const selectedStrategy = strategies.find((s: TaxStrategy): s is TaxStrategy => s.id === strategy)
+interface BracketCalculation {
+  min: number
+  max?: number
+  rate: number
+  taxableAmount: number
+  taxAmount: number
+}
+
+function calculateTaxByBrackets(income: number, brackets: TaxBracket[]): BracketCalculation[] {
+  let remainingIncome = income
+  const calculations: BracketCalculation[] = []
+
+  for (const bracket of brackets) {
+    const { min, max, rate } = bracket
+    const taxableAmount = max ? Math.min(remainingIncome, max - min) : remainingIncome
+    
+    if (taxableAmount <= 0) break
+    
+    calculations.push({
+      min,
+      max,
+      rate,
+      taxableAmount,
+      taxAmount: taxableAmount * rate
+    })
+    
+    remainingIncome -= taxableAmount
+    if (remainingIncome <= 0) break
+  }
+
+  return calculations
+}
+
+export default function TaxBreakdown({ income, strategy, currentCountry }: TaxBreakdownProps) {
+  if (!currentCountry) return null
+
+  const selectedStrategy = TAX_STRATEGIES.find(s => s.id === strategy)
   if (!selectedStrategy) return null
 
-  const calculation = calculateTax(income, selectedStrategy)
-  const effectiveRate = calculation.totalTax / income
+  const currentCalculations = calculateTaxByBrackets(income, currentCountry.brackets)
+  const proposedCalculations = calculateTaxByBrackets(income, selectedStrategy.brackets)
+
+  const currentTotal = currentCalculations.reduce((sum, calc) => sum + calc.taxAmount, 0)
+  const proposedTotal = proposedCalculations.reduce((sum, calc) => sum + calc.taxAmount, 0)
 
   return (
     <motion.div
@@ -23,58 +62,90 @@ export default function TaxBreakdown({ income, strategy }: TaxBreakdownProps) {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
-      <div className="space-y-4">
-        <h3 className="text-lg font-medium text-gray-300">
-          Tax Breakdown for {selectedStrategy.name}
-        </h3>
+      <h3 className="text-lg font-semibold text-white">
+        Detailed Tax Breakdown
+      </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Total Tax Card */}
-          <div className="bg-black/50 rounded-xl p-4 border border-amber-500/10">
-            <div className="text-sm text-gray-400 mb-1">Total Tax</div>
-            <div className="text-2xl font-bold text-white">
-              {formatCurrency(calculation.totalTax)}
-            </div>
-          </div>
-
-          {/* Effective Rate Card */}
-          <div className="bg-black/50 rounded-xl p-4 border border-amber-500/10">
-            <div className="text-sm text-gray-400 mb-1">Effective Tax Rate</div>
-            <div className="text-2xl font-bold text-white">
-              {formatPercentage(effectiveRate)}
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Current Tax Breakdown */}
+        <div>
+          <h4 className="text-sm font-medium text-gray-400 mb-4">
+            Current Tax Structure ({currentCountry.name})
+          </h4>
+          <div className="space-y-3">
+            {currentCalculations.map((calc, index) => (
+              <div
+                key={index}
+                className="p-3 rounded-lg bg-black/30 border border-amber-500/10"
+              >
+                <div className="flex justify-between text-sm mb-1">
+                  <span className="text-gray-400">
+                    {calc.max
+                      ? `$${calc.min.toLocaleString()} - $${calc.max.toLocaleString()}`
+                      : `Over $${calc.min.toLocaleString()}`}
+                  </span>
+                  <span className="text-amber-500">{(calc.rate * 100).toFixed(1)}%</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-400">
+                    Taxable: ${calc.taxableAmount.toLocaleString()}
+                  </span>
+                  <span className="text-white font-medium">
+                    Tax: ${calc.taxAmount.toLocaleString()}
+                  </span>
+                </div>
+              </div>
+            ))}
+            <div className="p-3 rounded-lg bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/20">
+              <div className="flex justify-between">
+                <span className="text-gray-300">Total Tax</span>
+                <span className="text-white font-semibold">
+                  ${currentTotal.toLocaleString()}
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Tax Brackets Breakdown */}
-        {calculation.brackets.length > 1 && (
-          <div className="bg-black/50 rounded-xl p-4 border border-amber-500/10">
-            <h4 className="text-sm font-medium text-gray-400 mb-3">
-              Tax Brackets
-            </h4>
-            <div className="space-y-3">
-              {calculation.brackets.map((bracket, index) => (
-                <div key={index} className="flex justify-between items-center text-sm">
-                  <div className="text-gray-400">
-                    {formatCurrency(bracket.bracket.min)}
-                    {bracket.bracket.max 
-                      ? ` - ${formatCurrency(bracket.bracket.max)}`
-                      : '+'
-                    }
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-gray-500">
-                      {formatPercentage(bracket.bracket.rate)}
-                    </span>
-                    <span className="text-white font-medium">
-                      {formatCurrency(bracket.taxAmount)}
-                    </span>
-                  </div>
+        {/* Proposed Tax Breakdown */}
+        <div>
+          <h4 className="text-sm font-medium text-gray-400 mb-4">
+            Proposed Structure ({selectedStrategy.name})
+          </h4>
+          <div className="space-y-3">
+            {proposedCalculations.map((calc, index) => (
+              <div
+                key={index}
+                className="p-3 rounded-lg bg-black/30 border border-amber-500/10"
+              >
+                <div className="flex justify-between text-sm mb-1">
+                  <span className="text-gray-400">
+                    {calc.max
+                      ? `$${calc.min.toLocaleString()} - $${calc.max.toLocaleString()}`
+                      : `Over $${calc.min.toLocaleString()}`}
+                  </span>
+                  <span className="text-amber-500">{(calc.rate * 100).toFixed(1)}%</span>
                 </div>
-              ))}
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-400">
+                    Taxable: ${calc.taxableAmount.toLocaleString()}
+                  </span>
+                  <span className="text-white font-medium">
+                    Tax: ${calc.taxAmount.toLocaleString()}
+                  </span>
+                </div>
+              </div>
+            ))}
+            <div className="p-3 rounded-lg bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/20">
+              <div className="flex justify-between">
+                <span className="text-gray-300">Total Tax</span>
+                <span className="text-white font-semibold">
+                  ${proposedTotal.toLocaleString()}
+                </span>
+              </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
 
       {/* Additional Information */}

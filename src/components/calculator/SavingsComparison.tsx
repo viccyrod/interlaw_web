@@ -1,34 +1,48 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { calculateTax, formatCurrency } from '@/utils/taxCalculations'
-import { strategies } from '@/data/strategies'
-import { TaxStrategy } from '@/types/calculator'
-import { TrendingUp, ArrowRight } from 'lucide-react'
+import { HomeCountry, TaxBracket } from '@/types/calculator'
+import { TAX_STRATEGIES } from '@/data/strategies'
+import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 interface SavingsComparisonProps {
   income: number
   strategy: string
+  currentCountry: HomeCountry | null
 }
 
-export default function SavingsComparison({ income, strategy }: SavingsComparisonProps) {
-  const selectedStrategy = strategies.find((s: TaxStrategy): s is TaxStrategy => s.id === strategy)
+function calculateTax(income: number, brackets: TaxBracket[]): number {
+  let remainingIncome = income
+  let totalTax = 0
+
+  for (const bracket of brackets) {
+    const { min, max, rate } = bracket
+    const taxableAmount = max ? Math.min(remainingIncome, max - min) : remainingIncome
+    
+    if (taxableAmount <= 0) break
+    
+    totalTax += taxableAmount * rate
+    remainingIncome -= taxableAmount
+    
+    if (remainingIncome <= 0) break
+  }
+
+  return totalTax
+}
+
+export default function SavingsComparison({ income, strategy, currentCountry }: SavingsComparisonProps) {
+  if (!currentCountry) return null
+
+  const selectedStrategy = TAX_STRATEGIES.find(s => s.id === strategy)
   if (!selectedStrategy) return null
 
-  // Calculate tax for current strategy
-  const newTax = calculateTax(income, selectedStrategy)
-  
-  // Calculate tax for Australia as baseline
-  const australianStrategy = strategies.find((s: TaxStrategy): s is TaxStrategy => s.id === 'australia')
-  const baselineTax = australianStrategy ? calculateTax(income, australianStrategy) : null
-  
-  if (!baselineTax) return null
-
-  const annualSavings = baselineTax.totalTax - newTax.totalTax
-  const monthlySavings = annualSavings / 12
-  const savingsPercentage = (annualSavings / baselineTax.totalTax) * 100
+  const currentTax = calculateTax(income, currentCountry.brackets)
+  const proposedTax = calculateTax(income, selectedStrategy.brackets)
+  const savings = currentTax - proposedTax
+  const savingsPercentage = (savings / currentTax) * 100
+  const breakevenMonths = Math.ceil((selectedStrategy.setupCost / savings) * 12)
 
   return (
     <motion.div
@@ -38,59 +52,75 @@ export default function SavingsComparison({ income, strategy }: SavingsCompariso
       className="space-y-6"
     >
       <div className="space-y-4">
-        <h3 className="text-lg font-medium text-gray-300">
-          Potential Tax Savings
+        <h3 className="text-lg font-semibold text-white">
+          Your Tax Savings Analysis
         </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {/* Annual Savings Card */}
-          <div className="bg-gradient-to-br from-amber-500/20 to-yellow-500/10 rounded-xl p-4 border border-amber-500/20">
-            <div className="flex items-center gap-2 text-amber-400 mb-1">
-              <TrendingUp className="w-4 h-4" />
-              <span className="text-sm">Annual Savings</span>
-            </div>
-            <div className="text-2xl font-bold text-white">
-              {formatCurrency(annualSavings)}
-            </div>
-          </div>
-
-          {/* Monthly Savings Card */}
-          <div className="bg-black/50 rounded-xl p-4 border border-amber-500/10">
-            <div className="text-sm text-gray-400 mb-1">Monthly Savings</div>
-            <div className="text-2xl font-bold text-white">
-              {formatCurrency(monthlySavings)}
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="p-4 rounded-xl bg-black/30 border border-amber-500/10">
+            <h4 className="text-sm font-medium text-gray-400">Current Tax Burden</h4>
+            <div className="mt-2">
+              <p className="text-2xl font-semibold text-white">
+                ${currentTax.toLocaleString()}
+              </p>
+              <p className="text-sm text-gray-400">
+                Based on {currentCountry.name} tax rates
+              </p>
             </div>
           </div>
 
-          {/* Savings Percentage Card */}
-          <div className="bg-black/50 rounded-xl p-4 border border-amber-500/10">
-            <div className="text-sm text-gray-400 mb-1">Tax Reduction</div>
-            <div className="text-2xl font-bold text-white">
-              {savingsPercentage.toFixed(1)}%
+          <div className="p-4 rounded-xl bg-black/30 border border-amber-500/10">
+            <h4 className="text-sm font-medium text-gray-400">Proposed Tax</h4>
+            <div className="mt-2">
+              <p className="text-2xl font-semibold text-white">
+                ${proposedTax.toLocaleString()}
+              </p>
+              <p className="text-sm text-gray-400">
+                With {selectedStrategy.name}
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Comparison Details */}
-        <div className="bg-black/50 rounded-xl p-4 border border-amber-500/10">
-          <div className="space-y-3">
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-gray-400">Australian Tax</span>
-              <span className="text-white font-medium">
-                {formatCurrency(baselineTax.totalTax)}
-              </span>
+        <div className="p-6 rounded-xl bg-gradient-to-br from-amber-500/20 to-yellow-500/20 border border-amber-500/20">
+          <div className="grid gap-6 sm:grid-cols-3">
+            <div>
+              <h4 className="text-sm font-medium text-gray-400">Annual Savings</h4>
+              <p className="text-2xl font-semibold text-white mt-1">
+                ${savings.toLocaleString()}
+              </p>
             </div>
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-gray-400">{selectedStrategy.name} Tax</span>
-              <span className="text-white font-medium">
-                {formatCurrency(newTax.totalTax)}
-              </span>
+
+            <div>
+              <h4 className="text-sm font-medium text-gray-400">Tax Reduction</h4>
+              <p className="text-2xl font-semibold text-white mt-1">
+                {savingsPercentage.toFixed(1)}%
+              </p>
             </div>
-            <div className="pt-3 border-t border-amber-500/10 flex justify-between items-center text-sm">
-              <span className="text-amber-400 font-medium">Total Annual Savings</span>
-              <span className="text-amber-400 font-bold">
-                {formatCurrency(annualSavings)}
-              </span>
+
+            <div>
+              <h4 className="text-sm font-medium text-gray-400">Break-even Time</h4>
+              <p className="text-2xl font-semibold text-white mt-1">
+                {breakevenMonths} months
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 pt-6 border-t border-amber-500/20">
+            <h4 className="text-sm font-medium text-white mb-3">Setup Requirements</h4>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <p className="text-sm text-gray-400">Initial Cost</p>
+                <p className="text-lg font-medium text-white">
+                  ${selectedStrategy.setupCost.toLocaleString()}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-400">Processing Time</p>
+                <p className="text-lg font-medium text-white">
+                  {selectedStrategy.processingTime}
+                </p>
+              </div>
             </div>
           </div>
         </div>

@@ -5,6 +5,21 @@ export interface TaxBracket {
   baseAmount?: number
 }
 
+export interface HomeCountry {
+  name: string
+  brackets: TaxBracket[]
+  currency: string
+  taxYear: string
+}
+
+export interface TaxComparison {
+  currentTax: number
+  proposedTax: number
+  savings: number
+  savingsPercentage: number
+  breakevenMonths: number
+}
+
 export interface TaxStrategy {
   id: string
   name: string
@@ -15,6 +30,13 @@ export interface TaxStrategy {
   stayRequirement: string
   benefits: string[]
   recommended?: boolean
+  comparison?: TaxComparison
+  requirements: string[]
+  featured?: boolean
+  suitableForIncomeRange?: {
+    min?: number
+    max?: number
+  }
 }
 
 export interface TaxCalculation {
@@ -42,4 +64,5 @@ export interface CountryStrategy {
   }
   recommended?: boolean
   highlights?: string[]
+  featured?: boolean
 } 

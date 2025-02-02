@@ -19,15 +19,28 @@ interface BlogPost {
 
 const featuredPosts: BlogPost[] = [
   {
+    slug: 'us-llc-formation-guide-2025',
+    title: 'Wyoming vs Delaware LLC Formation Guide for Non-Americans (2025)',
+    excerpt: 'A comprehensive comparison of forming an LLC in Wyoming versus Delaware as a non-U.S. resident in 2025, including costs, privacy, legal framework, and tax implications.',
+    category: 'Business Guide',
+    readTime: '8 min read',
+    author: 'InterLaw Team',
+    date: 'Feb 2, 2025',
+    imageUrl: '/images/blog/wyoming-vs-delaware-llc-formation.jpg'
+  },
+  {
     slug: 'paraguay-tax-benefits-2024',
     title: 'Paraguay Tax Benefits: Complete Guide for 2024',
     excerpt: 'Discover how Paraguay&apos;s tax system offers unprecedented benefits for digital entrepreneurs and remote professionals.',
     category: 'Tax Strategy',
     readTime: '8 min read',
     author: 'InterLaw Team',
-    date: 'Jan 15, 2024',
+    date: 'Dec 15, 2024',
     imageUrl: '/images/blog/paraguay-guide.jpg'
-  },
+  }
+]
+
+const recentPosts: BlogPost[] = [
   {
     slug: 'digital-nomad-tax-optimization',
     title: 'Tax Optimization Strategies for Digital Nomads',
@@ -35,12 +48,9 @@ const featuredPosts: BlogPost[] = [
     category: 'Digital Nomads',
     readTime: '6 min read',
     author: 'InterLaw Team',
-    date: 'Jan 10, 2024',
+    date: 'Jan 10, 2025',
     imageUrl: '/images/blog/digital-nomad.jpg'
-  }
-]
-
-const recentPosts: BlogPost[] = [
+  },
   {
     slug: 'residency-comparison',
     title: 'Comparing Global Residency Programs: Which One is Right for You?',
@@ -48,10 +58,9 @@ const recentPosts: BlogPost[] = [
     category: 'Comparison',
     readTime: '10 min read',
     author: 'InterLaw Team',
-    date: 'Jan 5, 2024',
+    date: 'Jan 25, 2025',
     imageUrl: '/images/blog/residency-comparison.jpg'
-  },
-  // Add more recent posts...
+  }
 ]
 
 export default function Blog() {
