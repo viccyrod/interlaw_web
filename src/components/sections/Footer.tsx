@@ -15,7 +15,7 @@ export function Footer() {
           <div className="space-y-6">
             <Link href="/" aria-label="InterLaw - Home">
               <Image
-                src="/images/logo-transparent.svg"
+                src="/images/logo.svg"
                 alt="InterLaw - Global Tax Optimization Experts"
                 width={160}
                 height={40}

@@ -22,7 +22,7 @@ export function Navbar() {
             {/* Logo */}
             <Link href="/" className="relative group" aria-label="InterLaw - Home">
               <Image
-                src="/images/logo-transparent.svg"
+                src="/images/logo.svg"
                 alt="InterLaw - Global Tax Optimization Experts"
                 width={160}
                 height={40}
