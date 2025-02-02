@@ -1,60 +1,72 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { formatCurrency } from '@/utils/taxCalculations'
 import { HomeCountry, TaxBracket } from '@/types/calculator'
 import { TAX_STRATEGIES } from '@/data/strategies'
 
 interface TaxBreakdownProps {
-  income: number
-  strategy: string
-  currentCountry: HomeCountry | null
+  income: number;
+  country: HomeCountry | null;
+  strategy: string;
 }
 
 interface BracketCalculation {
-  min: number
-  max?: number
-  rate: number
-  taxableAmount: number
-  taxAmount: number
+  min: number;
+  max?: number;
+  rate: number;
+  taxableAmount: number;
+  taxAmount: number;
 }
 
 function calculateTaxByBrackets(income: number, brackets: TaxBracket[]): BracketCalculation[] {
-  let remainingIncome = income
-  const calculations: BracketCalculation[] = []
+  let remainingIncome = income;
+  const calculations: BracketCalculation[] = [];
 
   for (const bracket of brackets) {
-    const { min, max, rate } = bracket
-    const taxableAmount = max ? Math.min(remainingIncome, max - min) : remainingIncome
+    const { min, max, rate } = bracket;
+    let taxableAmount;
     
-    if (taxableAmount <= 0) break
-    
+    if (max) {
+      // For brackets with a maximum
+      taxableAmount = Math.min(Math.max(0, remainingIncome), max - min);
+    } else {
+      // For the highest bracket without a maximum
+      taxableAmount = Math.max(0, remainingIncome);
+    }
+
+    if (taxableAmount <= 0) break;
+
     calculations.push({
       min,
       max,
       rate,
       taxableAmount,
       taxAmount: taxableAmount * rate
-    })
-    
-    remainingIncome -= taxableAmount
-    if (remainingIncome <= 0) break
+    });
+
+    remainingIncome -= taxableAmount;
+    if (remainingIncome <= 0) break;
   }
 
-  return calculations
+  return calculations;
 }
 
-export default function TaxBreakdown({ income, strategy, currentCountry }: TaxBreakdownProps) {
-  if (!currentCountry) return null
+export default function TaxBreakdown({ income, country, strategy }: TaxBreakdownProps) {
+  if (!country) return null;
 
-  const selectedStrategy = TAX_STRATEGIES.find(s => s.id === strategy)
-  if (!selectedStrategy) return null
+  const selectedStrategy = TAX_STRATEGIES.find(s => s.id === strategy);
+  if (!selectedStrategy) return null;
 
-  const currentCalculations = calculateTaxByBrackets(income, currentCountry.brackets)
-  const proposedCalculations = calculateTaxByBrackets(income, selectedStrategy.brackets)
+  const currentCalculations = calculateTaxByBrackets(income, country.brackets);
+  const proposedCalculations = calculateTaxByBrackets(income, selectedStrategy.brackets);
 
-  const currentTotal = currentCalculations.reduce((sum, calc) => sum + calc.taxAmount, 0)
-  const proposedTotal = proposedCalculations.reduce((sum, calc) => sum + calc.taxAmount, 0)
+  const currentTotal = currentCalculations.reduce((sum, calc) => sum + calc.taxAmount, 0);
+  const proposedTotal = proposedCalculations.reduce((sum, calc) => sum + calc.taxAmount, 0);
+  const savings = currentTotal - proposedTotal;
+  
+  // Calculate ROI
+  const monthsToROI = savings > 0 ? Math.ceil((selectedStrategy.totalEstimatedCost / savings) * 12) : Infinity;
+  const yearsToBreakeven = savings > 0 ? (selectedStrategy.totalEstimatedCost / savings) : Infinity;
 
   return (
     <motion.div
@@ -62,15 +74,13 @@ export default function TaxBreakdown({ income, strategy, currentCountry }: TaxBr
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
-      <h3 className="text-lg font-semibold text-white">
-        Detailed Tax Breakdown
-      </h3>
-
+      <h3 className="text-lg font-semibold text-white">Detailed Tax Breakdown</h3>
+      
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Current Tax Breakdown */}
         <div>
           <h4 className="text-sm font-medium text-gray-400 mb-4">
-            Current Tax Structure ({currentCountry.name})
+            Current Tax Structure ({country.name})
           </h4>
           <div className="space-y-3">
             {currentCalculations.map((calc, index) => (
@@ -81,17 +91,17 @@ export default function TaxBreakdown({ income, strategy, currentCountry }: TaxBr
                 <div className="flex justify-between text-sm mb-1">
                   <span className="text-gray-400">
                     {calc.max
-                      ? `$${calc.min.toLocaleString()} - $${calc.max.toLocaleString()}`
-                      : `Over $${calc.min.toLocaleString()}`}
+                      ? `${country.currency} ${calc.min.toLocaleString()} - ${calc.max.toLocaleString()}`
+                      : `Over ${country.currency} ${calc.min.toLocaleString()}`}
                   </span>
                   <span className="text-amber-500">{(calc.rate * 100).toFixed(1)}%</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-400">
-                    Taxable: ${calc.taxableAmount.toLocaleString()}
+                    Taxable: {country.currency} {calc.taxableAmount.toLocaleString()}
                   </span>
                   <span className="text-white font-medium">
-                    Tax: ${calc.taxAmount.toLocaleString()}
+                    Tax: {country.currency} {calc.taxAmount.toLocaleString()}
                   </span>
                 </div>
               </div>
@@ -100,8 +110,11 @@ export default function TaxBreakdown({ income, strategy, currentCountry }: TaxBr
               <div className="flex justify-between">
                 <span className="text-gray-300">Total Tax</span>
                 <span className="text-white font-semibold">
-                  ${currentTotal.toLocaleString()}
+                  {country.currency} {currentTotal.toLocaleString()}
                 </span>
+              </div>
+              <div className="text-sm text-gray-400 mt-1">
+                Effective Rate: {((currentTotal / income) * 100).toFixed(1)}%
               </div>
             </div>
           </div>
@@ -121,17 +134,17 @@ export default function TaxBreakdown({ income, strategy, currentCountry }: TaxBr
                 <div className="flex justify-between text-sm mb-1">
                   <span className="text-gray-400">
                     {calc.max
-                      ? `$${calc.min.toLocaleString()} - $${calc.max.toLocaleString()}`
-                      : `Over $${calc.min.toLocaleString()}`}
+                      ? `${country.currency} ${calc.min.toLocaleString()} - ${calc.max.toLocaleString()}`
+                      : `Over ${country.currency} ${calc.min.toLocaleString()}`}
                   </span>
                   <span className="text-amber-500">{(calc.rate * 100).toFixed(1)}%</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-400">
-                    Taxable: ${calc.taxableAmount.toLocaleString()}
+                    Taxable: {country.currency} {calc.taxableAmount.toLocaleString()}
                   </span>
                   <span className="text-white font-medium">
-                    Tax: ${calc.taxAmount.toLocaleString()}
+                    Tax: {country.currency} {calc.taxAmount.toLocaleString()}
                   </span>
                 </div>
               </div>
@@ -140,26 +153,47 @@ export default function TaxBreakdown({ income, strategy, currentCountry }: TaxBr
               <div className="flex justify-between">
                 <span className="text-gray-300">Total Tax</span>
                 <span className="text-white font-semibold">
-                  ${proposedTotal.toLocaleString()}
+                  {country.currency} {proposedTotal.toLocaleString()}
                 </span>
+              </div>
+              <div className="text-sm text-gray-400 mt-1">
+                Effective Rate: {((proposedTotal / income) * 100).toFixed(1)}%
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Additional Information */}
-      <div className="bg-amber-500/10 rounded-xl p-4 border border-amber-500/20">
-        <h4 className="text-sm font-medium text-amber-400 mb-2">
-          Important Notes
-        </h4>
-        <ul className="text-xs text-gray-400 space-y-1">
-          <li>• Setup cost: {formatCurrency(selectedStrategy.setupCost)}</li>
-          <li>• Processing time: {selectedStrategy.processingTime}</li>
-          <li>• Stay requirement: {selectedStrategy.stayRequirement}</li>
-          <li>• Tax calculations are estimates and may vary based on individual circumstances</li>
-        </ul>
+      {/* Summary Section */}
+      <div className="grid gap-4 sm:grid-cols-3 mt-6">
+        <div className="p-4 rounded-xl bg-black/30 border border-amber-500/10">
+          <p className="text-sm text-gray-400">Annual Savings</p>
+          <p className="text-2xl font-semibold text-white">
+            {country.currency} {savings.toLocaleString()}
+          </p>
+          <p className="text-sm text-gray-400">
+            ({((savings / income) * 100).toFixed(1)}% of income)
+          </p>
+        </div>
+
+        <div className="p-4 rounded-xl bg-black/30 border border-amber-500/10">
+          <p className="text-sm text-gray-400">Setup Cost</p>
+          <p className="text-2xl font-semibold text-white">
+            USD {selectedStrategy.totalEstimatedCost.toLocaleString()}
+          </p>
+          <p className="text-sm text-gray-400">One-time fee</p>
+        </div>
+
+        <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+          <p className="text-sm text-amber-400">Return on Investment</p>
+          <p className="text-2xl font-semibold text-white">
+            {monthsToROI === Infinity ? '∞' : monthsToROI} months
+          </p>
+          <p className="text-sm text-amber-400">
+            {yearsToBreakeven === Infinity ? 'N/A' : `${yearsToBreakeven.toFixed(1)} years`} to break even
+          </p>
+        </div>
       </div>
     </motion.div>
-  )
+  );
 } 

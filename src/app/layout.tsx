@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { SEO } from '@/components/SEO'
 import { Navbar } from '@/components/sections/Navbar'
 import { Footer } from '@/components/sections/Footer'
 import './globals.css'
@@ -65,7 +64,6 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body className={`bg-black text-white ${inter.className}`}>
-        <SEO />
         <Navbar />
         <main>{children}</main>
         <Footer />

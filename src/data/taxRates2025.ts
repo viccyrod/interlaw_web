@@ -129,5 +129,27 @@ export const TAX_RATES_2025: HomeCountry[] = [
       { min: 27479, max: 78570, rate: 0.30 },
       { min: 78571, rate: 0.41 }
     ]
+  },
+  {
+    name: 'Norway',
+    currency: 'NOK',
+    taxYear: '2025',
+    brackets: [
+      { min: 0, max: 217400, rate: 0.297 }, // 22% general + 7.7% insurance + 0% bracket
+      { min: 217401, max: 306050, rate: 0.314 }, // 22% general + 7.7% insurance + 1.7% bracket
+      { min: 306051, max: 697150, rate: 0.337 }, // 22% general + 7.7% insurance + 4.0% bracket
+      { min: 697151, max: 942400, rate: 0.434 }, // 22% general + 7.7% insurance + 13.7% bracket
+      { min: 942401, max: 1410750, rate: 0.464 }, // 22% general + 7.7% insurance + 16.7% bracket
+      { min: 1410751, rate: 0.474 } // 22% general + 7.7% insurance + 17.7% bracket
+    ]
+  },
+  {
+    name: 'Poland',
+    currency: 'PLN',
+    taxYear: '2025',
+    brackets: [
+      { min: 0, max: 120000, rate: 0.12 },
+      { min: 120001, rate: 0.32 }
+    ]
   }
 ] 

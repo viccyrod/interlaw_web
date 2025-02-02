@@ -10,6 +10,7 @@ export interface HomeCountry {
   brackets: TaxBracket[]
   currency: string
   taxYear: string
+  exchangeRate?: number
 }
 
 export interface TaxComparison {
@@ -25,8 +26,8 @@ export interface TaxStrategy {
   name: string
   description: string
   brackets: TaxBracket[]
-  setupCost: number
-  processingTime: string
+  totalEstimatedCost: number
+  estimatedProcessingTime: string
   stayRequirement: string
   benefits: string[]
   recommended?: boolean

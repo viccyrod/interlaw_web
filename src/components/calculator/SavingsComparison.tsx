@@ -1,48 +1,63 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { HomeCountry, TaxBracket } from '@/types/calculator'
+import { HomeCountry } from '@/types/calculator'
 import { TAX_STRATEGIES } from '@/data/strategies'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 interface SavingsComparisonProps {
-  income: number
-  strategy: string
-  currentCountry: HomeCountry | null
+  income: number;
+  currentCountry: HomeCountry | null;
+  strategy: string;
+  convert: (amount: number, fromCurrency: string, toCurrency: string) => number;
 }
 
-function calculateTax(income: number, brackets: TaxBracket[]): number {
-  let remainingIncome = income
-  let totalTax = 0
+export default function SavingsComparison({ income, currentCountry, strategy, convert }: SavingsComparisonProps) {
+  if (!currentCountry) return null;
 
-  for (const bracket of brackets) {
-    const { min, max, rate } = bracket
-    const taxableAmount = max ? Math.min(remainingIncome, max - min) : remainingIncome
-    
-    if (taxableAmount <= 0) break
-    
-    totalTax += taxableAmount * rate
-    remainingIncome -= taxableAmount
-    
-    if (remainingIncome <= 0) break
-  }
+  const selectedStrategy = TAX_STRATEGIES.find(s => s.id === strategy);
+  if (!selectedStrategy) return null;
 
-  return totalTax
-}
+  // Calculate taxes
+  const calculateTax = (brackets: { min: number; max?: number; rate: number }[], amount: number): number => {
+    let remainingIncome = amount;
+    let totalTax = 0;
 
-export default function SavingsComparison({ income, strategy, currentCountry }: SavingsComparisonProps) {
-  if (!currentCountry) return null
+    for (const bracket of brackets) {
+      const { min, max, rate } = bracket;
+      let taxableAmount;
+      
+      if (max) {
+        taxableAmount = Math.min(Math.max(0, remainingIncome), max - min);
+      } else {
+        taxableAmount = Math.max(0, remainingIncome);
+      }
 
-  const selectedStrategy = TAX_STRATEGIES.find(s => s.id === strategy)
-  if (!selectedStrategy) return null
+      if (taxableAmount <= 0) break;
 
-  const currentTax = calculateTax(income, currentCountry.brackets)
-  const proposedTax = calculateTax(income, selectedStrategy.brackets)
-  const savings = currentTax - proposedTax
-  const savingsPercentage = (savings / currentTax) * 100
-  const breakevenMonths = Math.ceil((selectedStrategy.setupCost / savings) * 12)
+      totalTax += taxableAmount * rate;
+      remainingIncome -= taxableAmount;
+      if (remainingIncome <= 0) break;
+    }
+
+    return totalTax;
+  };
+
+  const currentTax = calculateTax(currentCountry.brackets, income);
+  const optimizedTax = calculateTax(selectedStrategy.brackets, income);
+  const annualSavings = currentTax - optimizedTax;
+
+  // Convert setup cost to local currency
+  const setupCostLocal = convert(selectedStrategy.totalEstimatedCost, 'USD', currentCountry.currency);
+
+  // Calculate ROI metrics
+  const yearsToBreakeven = annualSavings > 0 ? selectedStrategy.totalEstimatedCost / annualSavings : Infinity;
+  const monthsToBreakeven = yearsToBreakeven * 12;
+  const tenYearSavings = (annualSavings * 10) - selectedStrategy.totalEstimatedCost;
+  const tenYearROI = ((annualSavings * 10) / selectedStrategy.totalEstimatedCost * 100);
+  const monthlyTaxSavings = annualSavings / 12;
 
   return (
     <motion.div
@@ -53,75 +68,50 @@ export default function SavingsComparison({ income, strategy, currentCountry }: 
     >
       <div className="space-y-4">
         <h3 className="text-lg font-semibold text-white">
-          Your Tax Savings Analysis
+          Long-term Benefits with {selectedStrategy.name}
         </h3>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="p-4 rounded-xl bg-black/30 border border-amber-500/10">
-            <h4 className="text-sm font-medium text-gray-400">Current Tax Burden</h4>
-            <div className="mt-2">
-              <p className="text-2xl font-semibold text-white">
-                ${currentTax.toLocaleString()}
-              </p>
-              <p className="text-sm text-gray-400">
-                Based on {currentCountry.name} tax rates
-              </p>
-            </div>
+            <p className="text-sm text-gray-400">10-Year Tax Savings</p>
+            <p className="text-2xl font-semibold text-white">
+              {currentCountry.currency} {tenYearSavings.toLocaleString()}
+            </p>
+            <p className="text-sm text-gray-400">
+              ({currentCountry.currency} {monthlyTaxSavings.toLocaleString()}/month)
+            </p>
           </div>
 
           <div className="p-4 rounded-xl bg-black/30 border border-amber-500/10">
-            <h4 className="text-sm font-medium text-gray-400">Proposed Tax</h4>
-            <div className="mt-2">
-              <p className="text-2xl font-semibold text-white">
-                ${proposedTax.toLocaleString()}
-              </p>
-              <p className="text-sm text-gray-400">
-                With {selectedStrategy.name}
-              </p>
-            </div>
+            <p className="text-sm text-gray-400">Break-Even Time</p>
+            <p className="text-2xl font-semibold text-white">
+              {monthsToBreakeven === Infinity ? '∞' : `${Math.ceil(monthsToBreakeven)} months`}
+            </p>
+            <p className="text-sm text-gray-400">
+              To recover setup costs
+            </p>
           </div>
         </div>
 
-        <div className="p-6 rounded-xl bg-gradient-to-br from-amber-500/20 to-yellow-500/20 border border-amber-500/20">
-          <div className="grid gap-6 sm:grid-cols-3">
-            <div>
-              <h4 className="text-sm font-medium text-gray-400">Annual Savings</h4>
-              <p className="text-2xl font-semibold text-white mt-1">
-                ${savings.toLocaleString()}
-              </p>
-            </div>
-
-            <div>
-              <h4 className="text-sm font-medium text-gray-400">Tax Reduction</h4>
-              <p className="text-2xl font-semibold text-white mt-1">
-                {savingsPercentage.toFixed(1)}%
-              </p>
-            </div>
-
-            <div>
-              <h4 className="text-sm font-medium text-gray-400">Break-even Time</h4>
-              <p className="text-2xl font-semibold text-white mt-1">
-                {breakevenMonths} months
-              </p>
-            </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="p-4 rounded-xl bg-black/30 border border-amber-500/10">
+            <p className="text-sm text-gray-400">Net Return (10 Years)</p>
+            <p className="text-2xl font-semibold text-white">
+              {currentCountry.currency} {(tenYearSavings - setupCostLocal).toLocaleString()}
+            </p>
+            <p className="text-sm text-gray-400">
+              After setup costs
+            </p>
           </div>
 
-          <div className="mt-6 pt-6 border-t border-amber-500/20">
-            <h4 className="text-sm font-medium text-white mb-3">Setup Requirements</h4>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <p className="text-sm text-gray-400">Initial Cost</p>
-                <p className="text-lg font-medium text-white">
-                  ${selectedStrategy.setupCost.toLocaleString()}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-400">Processing Time</p>
-                <p className="text-lg font-medium text-white">
-                  {selectedStrategy.processingTime}
-                </p>
-              </div>
-            </div>
+          <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+            <p className="text-sm text-amber-400">10-Year ROI</p>
+            <p className="text-2xl font-semibold text-white">
+              {tenYearROI.toLocaleString()}%
+            </p>
+            <p className="text-sm text-amber-400">
+              ({(tenYearROI / 10).toFixed(1)}% annualized)
+            </p>
           </div>
         </div>
       </div>
@@ -142,5 +132,5 @@ export default function SavingsComparison({ income, strategy, currentCountry }: 
         </Link>
       </div>
     </motion.div>
-  )
+  );
 } 

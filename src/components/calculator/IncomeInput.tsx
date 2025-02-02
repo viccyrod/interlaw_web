@@ -1,23 +1,31 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { formatCurrency } from '@/utils/taxCalculations'
 
 interface IncomeInputProps {
-  income: number
-  onChange: (value: number) => void
+  value: number;
+  onChange: (value: number) => void;
+  currency: string;
 }
 
-export default function IncomeInput({ income, onChange }: IncomeInputProps) {
-  const [inputValue, setInputValue] = useState<string>(formatCurrency(income))
+function formatWithCurrency(value: number, currency: string): string {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency,
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0
+  }).format(value);
+}
+
+export default function IncomeInput({ value, onChange, currency }: IncomeInputProps) {
+  const [inputValue, setInputValue] = useState<string>(formatWithCurrency(value, currency))
   const [isFocused, setIsFocused] = useState<boolean>(false)
 
-  // Format the display value when income prop changes
   useEffect(() => {
     if (!isFocused) {
-      setInputValue(formatCurrency(income))
+      setInputValue(formatWithCurrency(value, currency))
     }
-  }, [income, isFocused])
+  }, [value, currency, isFocused])
 
   const handleInputChange = (value: string) => {
     // Remove all non-numeric characters
@@ -35,12 +43,12 @@ export default function IncomeInput({ income, onChange }: IncomeInputProps) {
 
   const handleBlur = () => {
     setIsFocused(false)
-    setInputValue(formatCurrency(income))
+    setInputValue(formatWithCurrency(value, currency))
   }
 
   const handleFocus = () => {
     setIsFocused(true)
-    setInputValue(income.toString())
+    setInputValue(value.toString())
   }
 
   return (
@@ -49,9 +57,6 @@ export default function IncomeInput({ income, onChange }: IncomeInputProps) {
         Annual Income
       </label>
       <div className="relative">
-        <span className="absolute inset-y-0 left-4 flex items-center text-gray-400 pointer-events-none">
-          $
-        </span>
         <input
           type="text"
           id="income"
@@ -59,8 +64,8 @@ export default function IncomeInput({ income, onChange }: IncomeInputProps) {
           onChange={(e) => handleInputChange(e.target.value)}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className="block w-full pl-8 pr-4 py-3 bg-black/50 border border-amber-500/20 focus:border-amber-500/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition-colors"
-          placeholder="Enter your annual income"
+          className="block w-full px-4 py-3 bg-black/50 border border-amber-500/20 focus:border-amber-500/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition-colors"
+          placeholder={`Enter amount in ${currency}`}
         />
       </div>
       <p className="text-xs text-gray-500">
