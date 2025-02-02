@@ -2,8 +2,9 @@
 
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Clock, Calendar, CheckCircle2, Wallet } from 'lucide-react'
+import { ArrowRight, Clock, Calendar, CheckCircle2, Wallet, FileText, Building, Plane } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function ParaguayPage() {
   return (
@@ -159,11 +160,104 @@ export default function ParaguayPage() {
           </div>
         </motion.div>
 
-        {/* CTA Section */}
+        {/* Learn More Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
+          className="max-w-5xl mx-auto mb-16 sm:mb-24"
+        >
+          <h2 className="text-2xl sm:text-3xl font-bold mb-8 bg-gradient-to-r from-amber-200 to-yellow-200 bg-clip-text text-transparent text-center">
+            Detailed Guides
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Tourist Visa Guide */}
+            <Link href="/visa/tourist-visa-paraguay-2025" className="group">
+              <div className="bg-gradient-to-br from-amber-950/30 to-amber-900/20 rounded-xl p-6 border border-amber-500/10 hover:border-amber-500/30 transition-all">
+                <div className="relative w-full h-32 mb-4 rounded-lg overflow-hidden">
+                  <Image
+                    src="/images/blog/paraguay-visa.jpg"
+                    alt="Paraguay Tourist Visa Guide"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Plane className="w-4 h-4 text-amber-400" />
+                  <span className="text-sm text-amber-400">Entry Guide</span>
+                </div>
+                <h3 className="text-lg font-semibold text-amber-200 mb-2 group-hover:text-amber-100">Tourist Visa Requirements</h3>
+                <p className="text-gray-400 text-sm">Essential information for entering Paraguay as a US citizen.</p>
+              </div>
+            </Link>
+
+            {/* Temporary Residency Guide */}
+            <Link href="/residency/temporary-residency-paraguay-2025" className="group">
+              <div className="bg-gradient-to-br from-amber-950/30 to-amber-900/20 rounded-xl p-6 border border-amber-500/10 hover:border-amber-500/30 transition-all">
+                <div className="relative w-full h-32 mb-4 rounded-lg overflow-hidden">
+                  <Image
+                    src="/images/blog/temporary-residency.jpg"
+                    alt="Temporary Residency Guide"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="flex items-center gap-2 mb-2">
+                  <FileText className="w-4 h-4 text-amber-400" />
+                  <span className="text-sm text-amber-400">Residency Guide</span>
+                </div>
+                <h3 className="text-lg font-semibold text-amber-200 mb-2 group-hover:text-amber-100">Temporary Residency</h3>
+                <p className="text-gray-400 text-sm">Complete process for obtaining temporary residency status.</p>
+              </div>
+            </Link>
+
+            {/* Residency Requirements Guide */}
+            <Link href="/residency/requirements-paraguay-2025" className="group">
+              <div className="bg-gradient-to-br from-amber-950/30 to-amber-900/20 rounded-xl p-6 border border-amber-500/10 hover:border-amber-500/30 transition-all">
+                <div className="relative w-full h-32 mb-4 rounded-lg overflow-hidden">
+                  <Image
+                    src="/images/blog/residency-requirements.jpg"
+                    alt="Residency Requirements Guide"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="flex items-center gap-2 mb-2">
+                  <CheckCircle2 className="w-4 h-4 text-amber-400" />
+                  <span className="text-sm text-amber-400">Requirements</span>
+                </div>
+                <h3 className="text-lg font-semibold text-amber-200 mb-2 group-hover:text-amber-100">Residency Requirements</h3>
+                <p className="text-gray-400 text-sm">Detailed overview of documentation and eligibility criteria.</p>
+              </div>
+            </Link>
+
+            {/* Investment Guide */}
+            <Link href="/residency/investment-paraguay-2025" className="group">
+              <div className="bg-gradient-to-br from-amber-950/30 to-amber-900/20 rounded-xl p-6 border border-amber-500/10 hover:border-amber-500/30 transition-all">
+                <div className="relative w-full h-32 mb-4 rounded-lg overflow-hidden">
+                  <Image
+                    src="/images/blog/investment-paraguay.png"
+                    alt="Investment Guide"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Building className="w-4 h-4 text-amber-400" />
+                  <span className="text-sm text-amber-400">Investment</span>
+                </div>
+                <h3 className="text-lg font-semibold text-amber-200 mb-2 group-hover:text-amber-100">Investment Residency</h3>
+                <p className="text-gray-400 text-sm">Fast-track permanent residency through business investment.</p>
+              </div>
+            </Link>
+          </div>
+        </motion.div>
+
+        {/* CTA Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9 }}
           className="max-w-3xl mx-auto text-center"
         >
           <h2 className="text-2xl sm:text-3xl font-bold mb-6 bg-gradient-to-r from-amber-200 to-yellow-200 bg-clip-text text-transparent">
