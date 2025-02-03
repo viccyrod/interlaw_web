@@ -21,7 +21,7 @@ export function Hero() {
             <Image
               src="/world-map.svg"
               alt="World Map Background"
-              layout="fill"
+              fill
               className="object-cover"
               priority
             />
