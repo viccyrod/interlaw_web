@@ -106,14 +106,14 @@ export default function TaxBreakdown({ income, country, strategy }: TaxBreakdown
                 </div>
               </div>
             ))}
-            <div className="p-3 rounded-lg bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/20">
+            <div className="p-3 rounded-lg bg-gradient-to-r from-red-500/20 to-amber-500/20 border border-red-500/30">
               <div className="flex justify-between">
-                <span className="text-gray-300">Total Tax</span>
-                <span className="text-white font-semibold">
+                <span className="text-red-300">Total Tax Burden</span>
+                <span className="text-red-200 font-semibold">
                   {country.currency} {currentTotal.toLocaleString()}
                 </span>
               </div>
-              <div className="text-sm text-gray-400 mt-1">
+              <div className="text-sm text-red-400/80 mt-1">
                 Effective Rate: {((currentTotal / income) * 100).toFixed(1)}%
               </div>
             </div>
