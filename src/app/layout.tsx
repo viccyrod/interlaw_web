@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { Navbar } from '@/components/sections/Navbar'
 import { Footer } from '@/components/sections/Footer'
 import './globals.css'
+import { GoogleTagManagerHead, GoogleTagManagerBody } from '@/components/GoogleTagManager'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -62,8 +63,10 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <GoogleTagManagerHead />
       </head>
       <body className={`bg-black text-white ${inter.className}`}>
+        <GoogleTagManagerBody />
         <Navbar />
         <main>{children}</main>
         <Footer />

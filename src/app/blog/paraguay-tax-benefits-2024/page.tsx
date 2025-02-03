@@ -84,11 +84,11 @@ export default function ParaguayTaxBenefits() {
                 </li>
                 <li className="flex items-start gap-2">
                   <ArrowRight className="w-5 h-5 text-amber-400 mt-0.5" />
-                  <span>Minimal presence requirement (1 day per year)</span>
+                  <span>No presence requirement (Some days recommended)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <ArrowRight className="w-5 h-5 text-amber-400 mt-0.5" />
-                  <span>Fast processing time (30-45 days)</span>
+                  <span>Fast processing time (35-55 days)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <ArrowRight className="w-5 h-5 text-amber-400 mt-0.5" />

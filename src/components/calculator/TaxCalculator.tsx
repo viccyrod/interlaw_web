@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { HomeCountry } from '@/types/calculator'
 import { TAX_RATES_2025 } from '@/data/taxRates2025'
+import { TAX_STRATEGIES } from '@/data/strategies'
 import { useExchangeRates } from '@/hooks/useExchangeRates'
+import { useAnalytics } from '@/hooks/useAnalytics'
 import IncomeInput from './IncomeInput'
 import CountrySelector from './CountrySelector'
 import StrategySelector from './StrategySelector'
@@ -23,6 +25,12 @@ export default function TaxCalculator({ defaultIncome = 100000, defaultStrategy 
   const [showStrategies, setShowStrategies] = useState<boolean>(false)
   const [showBreakdown, setShowBreakdown] = useState<boolean>(false)
   const { rates, loading, error, convert } = useExchangeRates('USD')
+  const { trackCalculatorStep, trackCalculatorResults } = useAnalytics()
+
+  // Track initial load
+  useEffect(() => {
+    trackCalculatorStep('initiated')
+  }, [])
 
   // Update exchange rates when they're loaded
   useEffect(() => {
@@ -32,22 +40,29 @@ export default function TaxCalculator({ defaultIncome = 100000, defaultStrategy 
     }
   }, [rates])
 
-  // Don't convert income - it's already in the local currency
   const handleIncomeChange = (value: number) => {
     setIncome(value)
     setShowStrategies(false)
     setShowBreakdown(false)
+    trackCalculatorStep('income_entered', { income: value })
   }
 
   const handleCountryChange = (country: HomeCountry | null) => {
     setSelectedCountry(country)
     setShowStrategies(false)
     setShowBreakdown(false)
+    if (country) {
+      trackCalculatorStep('country_selected', { 
+        country: country.name,
+        currency: country.currency 
+      })
+    }
   }
 
   const handleStrategyChange = (strategy: string) => {
     setSelectedStrategy(strategy)
     setShowBreakdown(false)
+    trackCalculatorStep('strategy_selected', { strategy })
   }
 
   const handleProceed = () => {
@@ -58,6 +73,49 @@ export default function TaxCalculator({ defaultIncome = 100000, defaultStrategy 
 
   const handleCalculate = () => {
     setShowBreakdown(true)
+    trackCalculatorStep('results_viewed')
+    
+    // Calculate savings for analytics
+    if (selectedCountry && selectedStrategy) {
+      const strategy = TAX_STRATEGIES.find(s => s.id === selectedStrategy)
+      if (strategy) {
+        const currentTax = calculateTax(selectedCountry.brackets, income)
+        const optimizedTax = calculateTax(strategy.brackets, income)
+        const annualSavings = currentTax - optimizedTax
+        const tenYearSavings = (annualSavings * 10) - strategy.totalEstimatedCost
+        const monthsToBreakeven = annualSavings > 0 ? (strategy.totalEstimatedCost / annualSavings) * 12 : Infinity
+
+        trackCalculatorResults({
+          income,
+          country: selectedCountry.name,
+          strategy: strategy.name,
+          annualSavings,
+          tenYearSavings,
+          monthsToBreakeven
+        })
+      }
+    }
+  }
+
+  // Calculate tax helper function
+  const calculateTax = (brackets: { min: number; max?: number; rate: number }[], amount: number): number => {
+    let remainingIncome = amount
+    let totalTax = 0
+
+    for (const bracket of brackets) {
+      const { min, max, rate } = bracket
+      let taxableAmount = max 
+        ? Math.min(Math.max(0, remainingIncome), max - min)
+        : Math.max(0, remainingIncome)
+
+      if (taxableAmount <= 0) break
+
+      totalTax += taxableAmount * rate
+      remainingIncome -= taxableAmount
+      if (remainingIncome <= 0) break
+    }
+
+    return totalTax
   }
 
   return (
