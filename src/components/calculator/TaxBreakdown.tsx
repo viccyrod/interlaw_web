@@ -63,10 +63,6 @@ export default function TaxBreakdown({ income, country, strategy }: TaxBreakdown
   const currentTotal = currentCalculations.reduce((sum, calc) => sum + calc.taxAmount, 0);
   const proposedTotal = proposedCalculations.reduce((sum, calc) => sum + calc.taxAmount, 0);
   const savings = currentTotal - proposedTotal;
-  
-  // Calculate ROI
-  const monthsToROI = savings > 0 ? Math.ceil((selectedStrategy.totalEstimatedCost / savings) * 12) : Infinity;
-  const yearsToBreakeven = savings > 0 ? (selectedStrategy.totalEstimatedCost / savings) : Infinity;
 
   return (
     <motion.div

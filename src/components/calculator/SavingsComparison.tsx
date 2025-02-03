@@ -11,10 +11,9 @@ interface SavingsComparisonProps {
   income: number;
   currentCountry: HomeCountry | null;
   strategy: string;
-  convert: (amount: number, fromCurrency: string, toCurrency: string) => number;
 }
 
-export default function SavingsComparison({ income, currentCountry, strategy, convert }: SavingsComparisonProps) {
+export default function SavingsComparison({ income, currentCountry, strategy }: SavingsComparisonProps) {
   if (!currentCountry) return null;
 
   const selectedStrategy = TAX_STRATEGIES.find(s => s.id === strategy);
@@ -49,14 +48,10 @@ export default function SavingsComparison({ income, currentCountry, strategy, co
   const optimizedTax = calculateTax(selectedStrategy.brackets, income);
   const annualSavings = currentTax - optimizedTax;
 
-  // Convert setup cost to local currency
-  const setupCostLocal = convert(selectedStrategy.totalEstimatedCost, 'USD', currentCountry.currency);
-
   // Calculate ROI metrics
   const yearsToBreakeven = annualSavings > 0 ? selectedStrategy.totalEstimatedCost / annualSavings : Infinity;
   const monthsToBreakeven = yearsToBreakeven * 12;
   const tenYearSavings = (annualSavings * 10) - selectedStrategy.totalEstimatedCost;
-  const tenYearROI = ((annualSavings * 10) / selectedStrategy.totalEstimatedCost * 100);
   const monthlyTaxSavings = annualSavings / 12;
 
   return (
@@ -98,7 +93,12 @@ export default function SavingsComparison({ income, currentCountry, strategy, co
         <div className="p-4 rounded-xl bg-black/30 border border-amber-500/10">
           <p className="text-sm text-gray-400">Time to Recover Setup Cost</p>
           <p className="text-xl font-semibold text-white">
-            {monthsToBreakeven === Infinity ? '∞' : `${Math.ceil(monthsToBreakeven)} months`}
+            {monthsToBreakeven === Infinity 
+              ? '∞' 
+              : monthsToBreakeven < 1 
+                ? 'Less than a month'
+                : `${Math.ceil(monthsToBreakeven)} ${Math.ceil(monthsToBreakeven) === 1 ? 'month' : 'months'}`
+            }
           </p>
         </div>
       </div>

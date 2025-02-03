@@ -138,7 +138,6 @@ export default function TaxCalculator({ defaultIncome = 100000, defaultStrategy 
                 income={income}
                 currentCountry={selectedCountry}
                 strategy={selectedStrategy}
-                convert={convert}
               />
             </motion.div>
           )}
