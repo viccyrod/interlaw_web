@@ -14,7 +14,7 @@ const features = [
     icon: Wallet,
     title: "Tax Optimization",
     description: "Legally reduce your tax burden through strategic residency planning. Perfect for digital nomads, remote workers, and international entrepreneurs.",
-    highlight: "Save up to 90% on taxes"
+    highlight: "Save up to 100% on taxes"
   },
   {
     icon: Shield,

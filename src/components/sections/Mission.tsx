@@ -41,9 +41,9 @@ export function Mission() {
           {/* Stats section */}
           <div className="grid md:grid-cols-3 gap-8 border-t border-amber-500/10 pt-12">
             {[
-              { number: "90%", label: "Potential Tax Reduction" },
-              { number: "30+", label: "Available Jurisdictions" },
-              { number: "48h", label: "Response Time" }
+              { number: "100%", label: "Potential Tax Reduction" },
+              { number: "100+", label: "Available Jurisdictions" },
+              { number: "24h", label: "Response Time" }
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
