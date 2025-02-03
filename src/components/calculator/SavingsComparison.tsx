@@ -68,51 +68,38 @@ export default function SavingsComparison({ income, currentCountry, strategy, co
     >
       <div className="space-y-4">
         <h3 className="text-lg font-semibold text-white">
-          Long-term Benefits with {selectedStrategy.name}
+          Your Potential Long-term Benefits
         </h3>
 
+        {/* Highlighted Savings Section */}
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="p-4 rounded-xl bg-black/30 border border-amber-500/10">
-            <p className="text-sm text-gray-400">10-Year Tax Savings</p>
-            <p className="text-2xl font-semibold text-white">
-              {currentCountry.currency} {tenYearSavings.toLocaleString()}
+          <div className="p-6 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-amber-500/30">
+            <p className="text-sm text-amber-400 font-medium">Monthly Tax Savings</p>
+            <p className="text-3xl font-bold text-white mt-1">
+              {currentCountry.currency} {monthlyTaxSavings.toLocaleString()}
             </p>
-            <p className="text-sm text-gray-400">
-              ({currentCountry.currency} {monthlyTaxSavings.toLocaleString()}/month)
+            <p className="text-sm text-amber-400 mt-1">
+              {currentCountry.currency} {annualSavings.toLocaleString()} per year
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-black/30 border border-amber-500/10">
-            <p className="text-sm text-gray-400">Break-Even Time</p>
-            <p className="text-2xl font-semibold text-white">
-              {monthsToBreakeven === Infinity ? '∞' : `${Math.ceil(monthsToBreakeven)} months`}
+          <div className="p-6 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-amber-500/30">
+            <p className="text-sm text-amber-400 font-medium">10-Year Tax Savings</p>
+            <p className="text-3xl font-bold text-white mt-1">
+              {currentCountry.currency} {tenYearSavings.toLocaleString()}
             </p>
-            <p className="text-sm text-gray-400">
-              To recover setup costs
+            <p className="text-sm text-amber-400 mt-1">
+              Total savings over 10 years
             </p>
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="p-4 rounded-xl bg-black/30 border border-amber-500/10">
-            <p className="text-sm text-gray-400">Net Return (10 Years)</p>
-            <p className="text-2xl font-semibold text-white">
-              {currentCountry.currency} {(tenYearSavings - setupCostLocal).toLocaleString()}
-            </p>
-            <p className="text-sm text-gray-400">
-              After setup costs
-            </p>
-          </div>
-
-          <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
-            <p className="text-sm text-amber-400">10-Year ROI</p>
-            <p className="text-2xl font-semibold text-white">
-              {tenYearROI.toLocaleString()}%
-            </p>
-            <p className="text-sm text-amber-400">
-              ({(tenYearROI / 10).toFixed(1)}% annualized)
-            </p>
-          </div>
+        {/* Secondary Metrics */}
+        <div className="p-4 rounded-xl bg-black/30 border border-amber-500/10">
+          <p className="text-sm text-gray-400">Time to Recover Setup Cost</p>
+          <p className="text-xl font-semibold text-white">
+            {monthsToBreakeven === Infinity ? '∞' : `${Math.ceil(monthsToBreakeven)} months`}
+          </p>
         </div>
       </div>
 

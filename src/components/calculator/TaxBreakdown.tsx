@@ -165,32 +165,15 @@ export default function TaxBreakdown({ income, country, strategy }: TaxBreakdown
       </div>
 
       {/* Summary Section */}
-      <div className="grid gap-4 sm:grid-cols-3 mt-6">
-        <div className="p-4 rounded-xl bg-black/30 border border-amber-500/10">
-          <p className="text-sm text-gray-400">Annual Savings</p>
-          <p className="text-2xl font-semibold text-white">
+      <div className="mt-6">
+        <h3 className="text-lg font-semibold text-white mb-4">Your Tax Savings Summary</h3>
+        <div className="p-6 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-amber-500/30">
+          <p className="text-sm text-amber-400 font-medium">Annual Tax Savings</p>
+          <p className="text-3xl font-bold text-white mt-1">
             {country.currency} {savings.toLocaleString()}
           </p>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-amber-400 mt-1">
             ({((savings / income) * 100).toFixed(1)}% of income)
-          </p>
-        </div>
-
-        <div className="p-4 rounded-xl bg-black/30 border border-amber-500/10">
-          <p className="text-sm text-gray-400">Setup Cost</p>
-          <p className="text-2xl font-semibold text-white">
-            USD {selectedStrategy.totalEstimatedCost.toLocaleString()}
-          </p>
-          <p className="text-sm text-gray-400">One-time fee</p>
-        </div>
-
-        <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
-          <p className="text-sm text-amber-400">Return on Investment</p>
-          <p className="text-2xl font-semibold text-white">
-            {monthsToROI === Infinity ? '∞' : monthsToROI} months
-          </p>
-          <p className="text-sm text-amber-400">
-            {yearsToBreakeven === Infinity ? 'N/A' : `${yearsToBreakeven.toFixed(1)} years`} to break even
           </p>
         </div>
       </div>
