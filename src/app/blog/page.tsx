@@ -160,7 +160,7 @@ export default function BlogPage() {
                   Paraguay Tax Benefits: Complete Guide for 2024
                 </h2>
                 <p className="text-gray-400 text-sm mb-4">
-                  Everything you need to know about Paraguay's tax benefits and residency program.
+                  Everything you need to know about Paraguay&apos;s tax benefits and residency program.
                 </p>
               </div>
             </Link>

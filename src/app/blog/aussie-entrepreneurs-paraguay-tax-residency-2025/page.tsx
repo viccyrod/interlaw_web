@@ -72,7 +72,7 @@ export default function AussieEntrepreneursParaguay() {
         <div className="max-w-3xl mx-auto">
           <div className="prose prose-lg max-w-none prose-invert prose-p:text-gray-400 prose-headings:text-amber-200 prose-strong:text-amber-200 prose-a:text-amber-400 hover:prose-a:text-amber-300">
             <p>
-              G'day, Aussie entrepreneurs! If you're keen to keep more of your hard-earned dollars and optimize your tax situation, it's time to explore the dynamic duo of Paraguay tax residency and a Wyoming LLC. Let's dive into how this powerful combination can lead to significant savings and business advantages.
+              G&apos;day, Aussie entrepreneurs! If you&apos;re keen to keep more of your hard-earned dollars and optimize your tax situation, it&apos;s time to explore the dynamic duo of Paraguay tax residency and a Wyoming LLC. Let&apos;s dive into how this powerful combination can lead to significant savings and business advantages.
             </p>
 
             <h2>Paraguay Tax Residency: A Gateway to Tax Efficiency</h2>
@@ -82,14 +82,14 @@ export default function AussieEntrepreneursParaguay() {
                   <DollarSign className="w-5 h-5 text-amber-400 mt-1" />
                   <div>
                     <strong className="text-amber-200">Territorial Tax System:</strong>
-                    <p className="mt-1">Paraguay operates on a territorial taxation basis, meaning foreign-sourced income is not taxed. If your business generates revenue from outside Paraguay and you don't remit it into the country, you're looking at a 0% tax rate on that income.</p>
+                    <p className="mt-1">Paraguay operates on a territorial taxation basis, meaning foreign-sourced income is not taxed. If your business generates revenue from outside Paraguay and you don&apos;t remit it into the country, you&apos;re looking at a 0% tax rate on that income.</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <Building2 className="w-5 h-5 text-amber-400 mt-1" />
                   <div>
                     <strong className="text-amber-200">Simple Residency Process:</strong>
-                    <p className="mt-1">Obtaining tax residency in Paraguay is straightforward and affordable. The process involves minimal documentation and doesn't require you to reside in the country full-time.</p>
+                    <p className="mt-1">Obtaining tax residency in Paraguay is straightforward and affordable. The process involves minimal documentation and doesn&apos;t require you to reside in the country full-time.</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
@@ -107,7 +107,7 @@ export default function AussieEntrepreneursParaguay() {
               <ul className="space-y-3">
                 <li className="flex items-start gap-2">
                   <ArrowRight className="w-5 h-5 text-amber-400 mt-0.5" />
-                  <span>No State Income Tax: Wyoming doesn't impose a state corporate income tax</span>
+                  <span>No State Income Tax: Wyoming doesn&apos;t impose a state corporate income tax</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <ArrowRight className="w-5 h-5 text-amber-400 mt-0.5" />
@@ -181,7 +181,7 @@ export default function AussieEntrepreneursParaguay() {
             <div className="mt-12 sm:mt-16 p-6 sm:p-8 md:p-12 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-xl sm:rounded-2xl text-center">
               <h2 className="text-2xl sm:text-3xl font-bold text-black mb-4">Ready to Optimize Your Tax Strategy?</h2>
               <p className="text-black/80 mb-6 max-w-2xl mx-auto">
-                Calculate your potential savings and book a free consultation to discuss how Paraguay's tax benefits can work for your Australian business.
+                Calculate your potential savings and book a free consultation to discuss how Paraguay&apos;s tax benefits can work for your Australian business.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <Link href="/global-tax-savings-calculator">
