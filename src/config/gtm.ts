@@ -1,6 +1,10 @@
 export const GTM_ID = 'GTM-5N2RZ257'
 export const GA4_ID = 'G-EDH4FQD7D9'
 
+interface CustomEventData {
+  [key: string]: string | number | boolean | undefined;
+}
+
 // Page view tracking
 export const pageview = (url: string) => {
   if (typeof window !== 'undefined' && window.dataLayer) {
@@ -18,7 +22,7 @@ export const event = ({ action, category, label, value, ...customData }: {
   category: string
   label?: string
   value?: number
-  [key: string]: any
+  [key: string]: string | number | undefined
 }) => {
   if (typeof window !== 'undefined' && window.dataLayer) {
     window.dataLayer.push({
@@ -32,7 +36,7 @@ export const event = ({ action, category, label, value, ...customData }: {
 }
 
 // Helper function for calculator events
-export const trackCalculatorEvent = (eventName: string, data: Record<string, any> = {}) => {
+export const trackCalculatorEvent = (eventName: string, data: CustomEventData = {}) => {
   if (typeof window !== 'undefined' && window.dataLayer) {
     window.dataLayer.push({
       event: eventName,

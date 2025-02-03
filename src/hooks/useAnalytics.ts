@@ -1,14 +1,28 @@
 import { useEffect } from 'react';
 import * as gtm from '@/config/gtm';
 
+interface DataLayerEvent {
+  event: string;
+  [key: string]: string | number | boolean | undefined;
+}
+
 declare global {
   interface Window {
-    dataLayer: any[];
+    dataLayer: DataLayerEvent[];
   }
 }
 
+interface CalculatorEventData {
+  step_name?: string;
+  income?: number;
+  country?: string;
+  strategy?: string;
+  currency?: string;
+  [key: string]: string | number | undefined;
+}
+
 export const useAnalytics = () => {
-  const trackEvent = (eventName: string, eventData: Record<string, any> = {}) => {
+  const trackEvent = (eventName: string, eventData: CalculatorEventData = {}) => {
     if (typeof window !== 'undefined') {
       gtm.trackCalculatorEvent(eventName, eventData);
     }
@@ -16,7 +30,7 @@ export const useAnalytics = () => {
 
   const trackCalculatorStep = (
     step: 'initiated' | 'country_selected' | 'income_entered' | 'strategy_selected' | 'results_viewed' | 'consultation_booked',
-    data: Record<string, any> = {}
+    data: CalculatorEventData = {}
   ) => {
     trackEvent('calculator_step', {
       step_name: step,

@@ -30,7 +30,7 @@ export default function TaxCalculator({ defaultIncome = 100000, defaultStrategy 
   // Track initial load
   useEffect(() => {
     trackCalculatorStep('initiated')
-  }, [])
+  }, [trackCalculatorStep])
 
   // Update exchange rates when they're loaded
   useEffect(() => {
@@ -104,7 +104,7 @@ export default function TaxCalculator({ defaultIncome = 100000, defaultStrategy 
 
     for (const bracket of brackets) {
       const { min, max, rate } = bracket
-      let taxableAmount = max 
+      const taxableAmount = max 
         ? Math.min(Math.max(0, remainingIncome), max - min)
         : Math.max(0, remainingIncome)
 

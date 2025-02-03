@@ -108,30 +108,6 @@ export function About() {
             - Modern Sovereign Individual
           </p>
         </motion.div>
-
-        {/* Stats section */}
-        <div className="grid md:grid-cols-3 gap-8 mt-20">
-          {[
-            { number: "180+", label: "Visa-Free Countries" },
-            { number: "5-15%", label: "Effective Tax Rate" },
-            { number: "12+", label: "Citizenship Options" }
-          ].map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2, duration: 0.8 }}
-              className="text-center"
-            >
-              <div className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-yellow-400 mb-2">
-                {stat.number}
-              </div>
-              <div className="text-gray-400">
-                {stat.label}
-              </div>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   )
