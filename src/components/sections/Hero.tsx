@@ -87,7 +87,7 @@ export function Hero() {
             transition={{ delay: 0.4 }}
             className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-2 sm:px-0"
           >
-            <Link href="/calculator" className="w-full sm:w-auto">
+            <Link href="/global-tax-savings-calculator" className="w-full sm:w-auto">
               <Button className="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold px-6 sm:px-8 py-5 sm:py-6 rounded-full text-sm sm:text-base">
                 Calculate Your Tax Savings
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />

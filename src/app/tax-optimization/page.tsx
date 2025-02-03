@@ -83,7 +83,7 @@ const StrategyCard = ({
               <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
           </Link>
-          <Link href="/calculator" className="flex-1">
+          <Link href="/global-tax-savings-calculator" className="flex-1">
             <Button variant="outline" className="w-full border-amber-500/20 hover:bg-amber-500/10">
               Calculate Savings
             </Button>

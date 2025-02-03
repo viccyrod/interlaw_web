@@ -36,7 +36,7 @@ export default function ParaguayPage() {
               transition={{ delay: 0.2 }}
               className="flex flex-col sm:flex-row gap-4"
             >
-              <Link href="/calculator">
+              <Link href="/global-tax-savings-calculator">
                 <Button className="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black px-8 py-6 rounded-full">
                   Calculate Your Savings
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -267,7 +267,7 @@ export default function ParaguayPage() {
             Join the growing community of international entrepreneurs who have chosen Paraguay as their tax optimization strategy.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link href="/calculator">
+            <Link href="/global-tax-savings-calculator">
               <Button className="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black px-8 py-6 rounded-full">
                 Calculate Your Savings
                 <ArrowRight className="ml-2 h-5 w-5" />

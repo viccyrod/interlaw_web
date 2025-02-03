@@ -59,7 +59,7 @@ export const TAX_STRATEGIES: TaxStrategy[] = [
     name: 'Dubai Residency',
     description: 'Establish tax residency in Dubai with 0% personal income tax rate. The process includes company formation and residency permit under UAE regulations.',
     brackets: [{ min: 0, rate: 0 }],
-    totalEstimatedCost: 272000,
+    totalEstimatedCost: 19000,
     estimatedProcessingTime: '2-3 months',
     stayRequirement: '183 days per year',
     benefits: [
@@ -86,7 +86,7 @@ export const TAX_STRATEGIES: TaxStrategy[] = [
     name: 'Cyprus Residency',
     description: 'Obtain EU residency in Cyprus with access to a non-dom tax regime. Foreign income remitted is subject to competitive tax rates under local regulations.',
     brackets: [{ min: 0, rate: 0.10 }],
-    totalEstimatedCost: 120000,
+    totalEstimatedCost: 357000,
     estimatedProcessingTime: '4-6 months',
     stayRequirement: '183 days per year',
     benefits: [
