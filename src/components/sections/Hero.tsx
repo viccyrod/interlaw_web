@@ -68,7 +68,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-             Hey bro
+            Reduce your tax bill by up to 100%
           </motion.h1>
 
           <motion.p
