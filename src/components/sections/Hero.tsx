@@ -68,7 +68,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-             Reduce Your Tax Burden by Up to 100%
+             Hey bro
           </motion.h1>
 
           <motion.p
@@ -95,7 +95,7 @@ export function Hero() {
             </Link>
             <Link href="https://calendly.com/interlaw-io/30min" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
               <Button variant="outline" className="w-full sm:w-auto border-amber-500/20 hover:bg-amber-500/10 px-6 sm:px-8 py-5 sm:py-6 rounded-full text-sm sm:text-base">
-                Book Free Consultation
+                Book Consultation
               </Button>
             </Link>
           </motion.div>

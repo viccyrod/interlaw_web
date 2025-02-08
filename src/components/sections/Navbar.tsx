@@ -72,7 +72,7 @@ export function Navbar() {
                   aria-label="Schedule a free consultation"
                 >
                   <Phone className="w-4 h-4" />
-                  Free Consultation
+                  Book Consultation
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               </Link>
