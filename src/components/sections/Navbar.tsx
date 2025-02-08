@@ -69,7 +69,7 @@ export function Navbar() {
                   variant="default" 
                   size="sm"
                   className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold shadow-lg shadow-amber-500/20 transition-all duration-300 hover:shadow-amber-500/30 hover:-translate-y-0.5 flex items-center gap-2"
-                  aria-label="Schedule a free consultation"
+                  aria-label="Schedule a consultation"
                 >
                   <Phone className="w-4 h-4" />
                   Book Consultation
@@ -135,7 +135,7 @@ export function Navbar() {
                     className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black flex items-center justify-center gap-2"
                   >
                     <Phone className="w-4 h-4" />
-                    Free Consultation
+                    Book Consultation
                     <ChevronRight className="w-4 h-4" />
                   </Button>
                 </Link>
