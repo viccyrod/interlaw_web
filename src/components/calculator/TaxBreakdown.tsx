@@ -70,47 +70,47 @@ export default function TaxBreakdown({ income, country, strategy }: TaxBreakdown
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
-      <h3 className="text-lg font-semibold text-white">Detailed Tax Breakdown</h3>
+      <h3 className="text-lg font-semibold text-gray-800">Detailed Tax Breakdown</h3>
       
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Current Tax Breakdown */}
         <div>
-          <h4 className="text-sm font-medium text-gray-400 mb-4">
+          <h4 className="text-sm font-medium text-gray-600 mb-4">
             Current Tax Structure ({country.name})
           </h4>
           <div className="space-y-3">
             {currentCalculations.map((calc, index) => (
               <div
                 key={index}
-                className="p-3 rounded-lg bg-black/30 border border-amber-500/10"
+                className="p-3 rounded-lg bg-gray-50 border border-gray-200"
               >
                 <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-400">
+                  <span className="text-black">
                     {calc.max
                       ? `${country.currency} ${calc.min.toLocaleString()} - ${calc.max.toLocaleString()}`
                       : `Over ${country.currency} ${calc.min.toLocaleString()}`}
                   </span>
-                  <span className="text-amber-500">{(calc.rate * 100).toFixed(1)}%</span>
+                  <span className="text-black">{(calc.rate * 100).toFixed(1)}%</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">
-                    Taxable: {country.currency} {calc.taxableAmount.toLocaleString()}
+                  <span className="text-black">
+                    Taxable: {country.currency} {calc.taxableAmount.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                   </span>
-                  <span className="text-white font-medium">
-                    Tax: {country.currency} {calc.taxAmount.toLocaleString()}
+                  <span className="text-black font-medium">
+                    Tax: {country.currency} {calc.taxAmount.toLocaleString(undefined, { maximumFractionDigits: 2 })}
                   </span>
                 </div>
               </div>
             ))}
-            <div className="p-3 rounded-lg bg-gradient-to-r from-red-500/20 to-amber-500/20 border border-red-500/30">
+            <div className="p-3 rounded-lg bg-red-50 border border-red-200">
               <div className="flex justify-between">
-                <span className="text-red-300">Total Tax Burden</span>
-                <span className="text-red-200 font-semibold">
-                  {country.currency} {currentTotal.toLocaleString()}
+                <span className="text-black">Total Tax Burden</span>
+                <span className="text-black font-semibold">
+                  {country.currency} {currentTotal.toLocaleString(undefined, { maximumFractionDigits: 2 })}
                 </span>
               </div>
-              <div className="text-sm text-red-400/80 mt-1">
-                Effective Rate: {((currentTotal / income) * 100).toFixed(1)}%
+              <div className="text-sm text-black mt-1">
+                Effective Rate: {income > 0 ? ((currentTotal / income) * 100).toFixed(1) : 0}%
               </div>
             </div>
           </div>
@@ -118,42 +118,42 @@ export default function TaxBreakdown({ income, country, strategy }: TaxBreakdown
 
         {/* Proposed Tax Breakdown */}
         <div>
-          <h4 className="text-sm font-medium text-gray-400 mb-4">
+          <h4 className="text-sm font-medium text-gray-600 mb-4">
             Proposed Structure ({selectedStrategy.name})
           </h4>
           <div className="space-y-3">
             {proposedCalculations.map((calc, index) => (
               <div
                 key={index}
-                className="p-3 rounded-lg bg-black/30 border border-amber-500/10"
+                className="p-3 rounded-lg bg-gray-50 border border-gray-200"
               >
                 <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-400">
+                  <span className="text-black">
                     {calc.max
                       ? `${country.currency} ${calc.min.toLocaleString()} - ${calc.max.toLocaleString()}`
                       : `Over ${country.currency} ${calc.min.toLocaleString()}`}
                   </span>
-                  <span className="text-amber-500">{(calc.rate * 100).toFixed(1)}%</span>
+                  <span className="text-black">{(calc.rate * 100).toFixed(1)}%</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">
-                    Taxable: {country.currency} {calc.taxableAmount.toLocaleString()}
+                  <span className="text-black">
+                    Taxable: {country.currency} {calc.taxableAmount.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                   </span>
-                  <span className="text-white font-medium">
-                    Tax: {country.currency} {calc.taxAmount.toLocaleString()}
+                  <span className="text-black font-medium">
+                    Tax: {country.currency} {calc.taxAmount.toLocaleString(undefined, { maximumFractionDigits: 2 })}
                   </span>
                 </div>
               </div>
             ))}
-            <div className="p-3 rounded-lg bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/20">
+            <div className="p-3 rounded-lg bg-orange-50 border border-orange-200">
               <div className="flex justify-between">
-                <span className="text-gray-300">Total Tax</span>
-                <span className="text-white font-semibold">
-                  {country.currency} {proposedTotal.toLocaleString()}
+                <span className="text-black">Total Tax</span>
+                <span className="text-black font-semibold">
+                  {country.currency} {proposedTotal.toLocaleString(undefined, { maximumFractionDigits: 2 })}
                 </span>
               </div>
-              <div className="text-sm text-gray-400 mt-1">
-                Effective Rate: {((proposedTotal / income) * 100).toFixed(1)}%
+              <div className="text-sm text-black mt-1">
+                Effective Rate: {income > 0 ? ((proposedTotal / income) * 100).toFixed(1) : 0}%
               </div>
             </div>
           </div>
@@ -162,14 +162,14 @@ export default function TaxBreakdown({ income, country, strategy }: TaxBreakdown
 
       {/* Summary Section */}
       <div className="mt-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Your Tax Savings Summary</h3>
-        <div className="p-6 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-amber-500/30">
-          <p className="text-sm text-amber-400 font-medium">Annual Tax Savings</p>
-          <p className="text-3xl font-bold text-white mt-1">
-            {country.currency} {savings.toLocaleString()}
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">Your Tax Savings Summary</h3>
+        <div className="p-6 rounded-xl bg-green-50 border-2 border-green-300">
+          <p className="text-sm text-black font-medium">Annual Tax Savings</p>
+          <p className="text-3xl font-bold text-black mt-1">
+            {country.currency} {savings.toLocaleString(undefined, { maximumFractionDigits: 2 })}
           </p>
-          <p className="text-sm text-amber-400 mt-1">
-            ({((savings / income) * 100).toFixed(1)}% of income)
+          <p className="text-sm text-black mt-1">
+            ({income > 0 ? ((savings / income) * 100).toFixed(1) : 0}% of income)
           </p>
         </div>
       </div>

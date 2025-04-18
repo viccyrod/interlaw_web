@@ -62,61 +62,45 @@ export default function SavingsComparison({ income, currentCountry, strategy }: 
       className="space-y-6"
     >
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-white">
+        <h3 className="text-lg font-semibold text-gray-900">
           Your Potential Long-term Benefits
         </h3>
 
         {/* Highlighted Savings Section */}
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="p-6 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-amber-500/30">
-            <p className="text-sm text-amber-400 font-medium">Monthly Tax Savings</p>
-            <p className="text-3xl font-bold text-white mt-1">
-              {currentCountry.currency} {monthlyTaxSavings.toLocaleString()}
+          <div className="p-6 rounded-xl bg-gray-100 border border-gray-200">
+            <p className="text-sm text-gray-700 font-medium">Monthly Tax Savings</p>
+            <p className="text-3xl font-bold text-black mt-1">
+              {currentCountry.currency} {monthlyTaxSavings.toLocaleString(undefined, { maximumFractionDigits: 0 })}
             </p>
-            <p className="text-sm text-amber-400 mt-1">
-              {currentCountry.currency} {annualSavings.toLocaleString()} per year
+            <p className="text-sm text-gray-600 mt-1">
+              {currentCountry.currency} {annualSavings.toLocaleString(undefined, { maximumFractionDigits: 0 })} per year
             </p>
           </div>
 
-          <div className="p-6 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-amber-500/30">
-            <p className="text-sm text-amber-400 font-medium">10-Year Tax Savings</p>
-            <p className="text-3xl font-bold text-white mt-1">
-              {currentCountry.currency} {tenYearSavings.toLocaleString()}
+          <div className="p-6 rounded-xl bg-gray-100 border border-gray-200">
+            <p className="text-sm text-gray-700 font-medium">10-Year Tax Savings</p>
+            <p className="text-3xl font-bold text-black mt-1">
+              {currentCountry.currency} {tenYearSavings.toLocaleString(undefined, { maximumFractionDigits: 0 })}
             </p>
-            <p className="text-sm text-amber-400 mt-1">
+            <p className="text-sm text-gray-600 mt-1">
               Total savings over 10 years
             </p>
           </div>
         </div>
 
         {/* Secondary Metrics */}
-        <div className="p-4 rounded-xl bg-black/30 border border-amber-500/10">
-          <p className="text-sm text-gray-400">Time to Recover Setup Cost</p>
-          <p className="text-xl font-semibold text-white">
+        <div className="p-4 rounded-xl bg-gray-100 border border-gray-200">
+          <p className="text-sm text-gray-700">Time to Recover Setup Cost</p>
+          <p className="text-xl font-semibold text-black">
             {monthsToBreakeven === Infinity 
-              ? '∞' 
+              ? 'N/A (No Savings)' 
               : monthsToBreakeven < 1 
                 ? 'Less than a month'
                 : `${Math.ceil(monthsToBreakeven)} ${Math.ceil(monthsToBreakeven) === 1 ? 'month' : 'months'}`
             }
           </p>
         </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="bg-gradient-to-r from-amber-500 to-yellow-500 rounded-xl p-6 text-center">
-        <h4 className="text-xl font-bold text-black mb-2">
-          Ready to Optimize Your Taxes?
-        </h4>
-        <p className="text-gray-900 mb-6">
-          Book a free consultation to learn how to implement the {selectedStrategy.name} strategy.
-        </p>
-        <Link href="https://calendly.com/interlaw-io/30min" target="_blank" rel="noopener noreferrer">
-          <Button className="bg-black hover:bg-gray-900 text-white px-8 py-6 rounded-full">
-            Book Free Consultation
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-        </Link>
       </div>
     </motion.div>
   );
