@@ -53,7 +53,7 @@ export default function IncomeInput({ value, onChange, currency }: IncomeInputPr
 
   return (
     <div className="space-y-2">
-      <label htmlFor="income" className="block text-sm font-medium text-gray-300">
+      <label htmlFor="income" className="block text-sm font-medium text-gray-700">
         Annual Income
       </label>
       <div className="relative">
@@ -64,7 +64,7 @@ export default function IncomeInput({ value, onChange, currency }: IncomeInputPr
           onChange={(e) => handleInputChange(e.target.value)}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className="block w-full px-4 py-3 bg-black/50 border border-amber-500/20 focus:border-amber-500/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition-colors"
+          className="block w-full px-4 py-3 bg-white border border-gray-300 focus:border-orange-500 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500/20 transition-colors shadow-sm"
           placeholder={`Enter amount in ${currency}`}
         />
       </div>

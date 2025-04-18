@@ -15,7 +15,7 @@ export default function CalculatorLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="bg-white">{children}</body>
     </html>
   );
 } 

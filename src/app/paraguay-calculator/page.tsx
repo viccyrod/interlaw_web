@@ -4,8 +4,8 @@ import TaxCalculator from '@/components/calculator/TaxCalculator'
 
 export default function ParaguayCalculatorPage() {
   return (
-    <div className="h-screen w-screen flex items-center justify-center">
-      {/* Using default values for now, you can adjust if needed */}
+    <div className="p-4 sm:p-8">
+      {/* TODO: Adjust TaxCalculator component styles for light theme */}
       <TaxCalculator defaultIncome={100000} defaultStrategy="paraguay" />
     </div>
   )

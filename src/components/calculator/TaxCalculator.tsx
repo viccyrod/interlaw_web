@@ -123,7 +123,7 @@ export default function TaxCalculator({ defaultIncome = 100000, defaultStrategy 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-black/50 backdrop-blur-xl rounded-3xl border border-amber-500/10 p-4 sm:p-6 md:p-8"
+        className="bg-white rounded-3xl border border-gray-200 p-4 sm:p-6 md:p-8 shadow-lg"
       >
         <div className="space-y-6 sm:space-y-8">
           {/* Step 1: Income & Country Selection */}
@@ -145,9 +145,9 @@ export default function TaxCalculator({ defaultIncome = 100000, defaultStrategy 
               whileTap={{ scale: 0.98 }}
               onClick={handleProceed}
               disabled={!income || !selectedCountry}
-              className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 
-                disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed text-black font-semibold 
-                py-3 sm:py-4 px-4 rounded-xl shadow-lg text-sm sm:text-base"
+              className="w-full bg-orange-500 hover:bg-orange-600 
+                disabled:bg-gray-400 disabled:cursor-not-allowed text-black font-semibold 
+                py-3 sm:py-4 px-4 rounded-xl shadow-md text-sm sm:text-base transition-colors"
             >
               Show Tax Optimization Strategies
             </motion.button>
@@ -171,8 +171,8 @@ export default function TaxCalculator({ defaultIncome = 100000, defaultStrategy 
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleCalculate}
-                className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 
-                  text-black font-semibold py-3 sm:py-4 px-4 rounded-xl shadow-lg text-sm sm:text-base"
+                className="w-full bg-orange-500 hover:bg-orange-600 
+                  text-black font-semibold py-3 sm:py-4 px-4 rounded-xl shadow-md text-sm sm:text-base transition-colors"
               >
                 Calculate Tax Savings
               </motion.button>
@@ -201,11 +201,11 @@ export default function TaxCalculator({ defaultIncome = 100000, defaultStrategy 
           )}
 
           {loading && (
-            <div className="text-amber-500 text-sm">Loading exchange rates...</div>
+            <div className="text-orange-600 text-sm">Loading exchange rates...</div>
           )}
           
           {error && (
-            <div className="text-red-500 text-sm">
+            <div className="text-red-600 text-sm">
               Error loading exchange rates. Using default conversions.
             </div>
           )}
