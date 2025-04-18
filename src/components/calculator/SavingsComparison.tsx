@@ -3,9 +3,6 @@
 import { motion } from 'framer-motion'
 import { HomeCountry } from '@/types/calculator'
 import { TAX_STRATEGIES } from '@/data/strategies'
-import { ArrowRight } from 'lucide-react'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 
 interface SavingsComparisonProps {
   income: number;
