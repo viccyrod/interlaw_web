@@ -59,7 +59,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            PAYING TOO MUCH IN TAXES?
+            INTERNATIONAL LAW & TAX COMPLIANCE
           </motion.p>
 
           <motion.h1 
@@ -68,7 +68,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            Reduce your tax bill by up to 100%
+            Legal Tax Optimization & Global Compliance
           </motion.h1>
 
           <motion.p
@@ -77,8 +77,8 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            Transform your monthly tax bill into $0 through strategic residency planning. 
-            Join successful individuals who have already optimized their global tax position.
+            Navigate complex international tax laws with confidence. Our legal experts ensure full compliance 
+            while optimizing your global tax strategy through legitimate residency and business structures.
           </motion.p>
 
           <motion.div
@@ -89,13 +89,13 @@ export function Hero() {
           >
             <Link href="/global-tax-savings-calculator" className="w-full sm:w-auto">
               <Button className="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold px-6 sm:px-8 py-5 sm:py-6 rounded-full text-sm sm:text-base">
-                Calculate Your Tax Savings
+                Assess Your Tax Strategy
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
             </Link>
             <Link href="https://calendly.com/interlaw-io/30min" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
               <Button variant="outline" className="w-full sm:w-auto border-amber-500/20 hover:bg-amber-500/10 px-6 sm:px-8 py-5 sm:py-6 rounded-full text-sm sm:text-base">
-                Book Consultation
+                Legal Consultation
               </Button>
             </Link>
           </motion.div>
@@ -109,15 +109,15 @@ export function Hero() {
           >
             <div className="flex items-center gap-2">
               <span className="text-amber-400">✓</span>
-              100% Legal & Compliant
+              Expert Legal Guidance
             </div>
             <div className="flex items-center gap-2">
               <span className="text-amber-400">✓</span>
-              500+ Clients Helped
+              500+ Compliance Cases
             </div>
             <div className="flex items-center gap-2">
               <span className="text-amber-400">✓</span>
-              $10M+ Tax Saved
+              International Tax Law
             </div>
           </motion.div>
         </motion.div>

@@ -25,7 +25,7 @@ export function Mission() {
             className="text-2xl md:text-3xl text-gray-200 mb-8 leading-relaxed"
           >
             Our mission is simple: help successful individuals
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-200 font-semibold"> achieve true financial and personal freedom.</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-200 font-semibold"> achieve true financial and personal freedom through legal excellence.</span>
           </motion.p>
 
           <motion.p
@@ -34,16 +34,16 @@ export function Mission() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-xl text-gray-400 mb-12 leading-relaxed"
           >
-            Through strategic citizenship planning, tax optimization, and global banking solutions, 
+            Through legally compliant strategic citizenship planning, expert tax optimization, and regulated global banking solutions, 
             we empower you to break free from single-jurisdiction constraints and create a life of true sovereignty.
           </motion.p>
 
           {/* Stats section */}
           <div className="grid md:grid-cols-3 gap-8 border-t border-amber-500/10 pt-12">
             {[
-              { number: "100%", label: "Potential Tax Reduction" },
+              { number: "100%", label: "Legal Compliance" },
               { number: "100+", label: "Available Jurisdictions" },
-              { number: "24h", label: "Response Time" }
+              { number: "24h", label: "Legal Response Time" }
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
